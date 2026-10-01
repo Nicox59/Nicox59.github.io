@@ -14,9 +14,9 @@ Desde esta carpeta, ejecutar `python -m http.server 8765 --bind 127.0.0.1` y abr
 
 ## GitHub Pages
 
-Repositorio público: [Nicox59/Nicox59.github.io](https://github.com/Nicox59/Nicox59.github.io). GitHub Pages está habilitado desde la rama `main`, carpeta `/ (root)`. Dominio configurado: `niar.cl`. La dirección `nicox59.github.io` redirige al dominio personalizado; puede no abrir mientras se propaga la delegación. HTTPS está pendiente del certificado de GitHub. `.nojekyll` permite servir los archivos tal como están.
+Repositorio público: [Nicox59/Nicox59.github.io](https://github.com/Nicox59/Nicox59.github.io). GitHub Pages está habilitado desde la rama `main`, carpeta `/ (root)`. Sitio publicado: [niar.cl](https://niar.cl/), con HTTPS obligatorio. `www.niar.cl` y `nicox59.github.io` redirigen al dominio principal. `.nojekyll` permite servir los archivos tal como están.
 
-El dominio personalizado `niar.cl` está asociado al repositorio. La zona DNS se administra desde “Gestionar DNS” en el portal de INC mediante Openprovider. La verificación de propiedad y HTTPS quedan pendientes hasta que la nueva delegación DNS sea visible para GitHub.
+El dominio personalizado `niar.cl` está asociado al repositorio y su propiedad está verificada en la cuenta de GitHub. La zona DNS se administra desde “Gestionar DNS” en el portal de INC mediante Openprovider. El certificado TLS cubre `niar.cl` y `www.niar.cl`; ambas direcciones se comprobaron con validación normal del certificado y respuesta HTTP 200 el 1 de octubre de 2026.
 
 ## Dominio niar.cl
 
@@ -36,7 +36,7 @@ Reemplazar solamente los registros web incompatibles del dominio raíz y `www`, 
 
 El TXT `_github-pages-challenge-Nicox59.niar.cl` permite verificar la propiedad desde la configuración Pages de la cuenta GitHub. Conservarlo tras verificar. En el editor de INC el tipo TXT aparece como “SPF (txt)”. No es necesario contratar alojamiento web para GitHub Pages.
 
-Cuando GitHub valide los DNS y emita el certificado, activar Enforce HTTPS. Los cambios DNS pueden tardar hasta 24 horas.
+Enforce HTTPS está activado. Si se modifican los DNS en el futuro, los cambios pueden tardar hasta 24 horas.
 
 Fuentes: [dominio personalizado](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site), [publicación desde una rama](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site) y [nameservers de Openprovider](https://support.openprovider.eu/hc/en-us/articles/360026557334-How-to-change-nameservers-of-a-domain).
 
