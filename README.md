@@ -14,7 +14,9 @@ Desde esta carpeta, ejecutar `python -m http.server 8765 --bind 127.0.0.1` y abr
 
 ## GitHub Pages
 
-Repositorio propuesto: `Nicox59/Nicox59.github.io`, público. Configurar Pages con `Deploy from a branch`, rama `main`, carpeta `/ (root)`. `.nojekyll` permite servir los archivos tal como están.
+Repositorio público: [Nicox59/Nicox59.github.io](https://github.com/Nicox59/Nicox59.github.io). GitHub Pages está habilitado desde la rama `main`, carpeta `/ (root)`, con HTTPS. Sitio actual: [nicox59.github.io](https://nicox59.github.io/). `.nojekyll` permite servir los archivos tal como están.
+
+La conexión del dominio `niar.cl` está pendiente del acceso al editor de zona DNS de INC.
 
 ## Dominio niar.cl
 
