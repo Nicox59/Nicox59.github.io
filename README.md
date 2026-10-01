@@ -14,15 +14,15 @@ Desde esta carpeta, ejecutar `python -m http.server 8765 --bind 127.0.0.1` y abr
 
 ## GitHub Pages
 
-Repositorio público: [Nicox59/Nicox59.github.io](https://github.com/Nicox59/Nicox59.github.io). GitHub Pages está habilitado desde la rama `main`, carpeta `/ (root)`, con HTTPS. Sitio actual: [nicox59.github.io](https://nicox59.github.io/). `.nojekyll` permite servir los archivos tal como están.
+Repositorio público: [Nicox59/Nicox59.github.io](https://github.com/Nicox59/Nicox59.github.io). GitHub Pages está habilitado desde la rama `main`, carpeta `/ (root)`. Dominio configurado: `niar.cl`. La dirección `nicox59.github.io` redirige al dominio personalizado; puede no abrir mientras se propaga la delegación. HTTPS está pendiente del certificado de GitHub. `.nojekyll` permite servir los archivos tal como están.
 
-La conexión del dominio `niar.cl` está pendiente del acceso al editor de zona DNS de INC.
+El dominio personalizado `niar.cl` está asociado al repositorio. La zona DNS se administra desde “Gestionar DNS” en el portal de INC mediante Openprovider. La verificación de propiedad y HTTPS quedan pendientes hasta que la nueva delegación DNS sea visible para GitHub.
 
 ## Dominio niar.cl
 
 Agregar primero `niar.cl` en Settings → Pages → Custom domain. Si se publica desde una rama, GitHub genera un archivo `CNAME`; sincronizar ese cambio en el checkout local.
 
-En el administrador de zona DNS de INC, configurar estos registros:
+En el administrador de zona DNS de INC, configurar estos registros. Para el dominio raíz, dejar Host Name vacío: este editor no admite `@` y añade `.niar.cl` a cualquier nombre ingresado.
 
 | Nombre | Tipo | Destino |
 | --- | --- | --- |
@@ -32,13 +32,13 @@ En el administrador de zona DNS de INC, configurar estos registros:
 | `@` | A | `185.199.111.153` |
 | `www` | CNAME | `nicox59.github.io` |
 
-Reemplazar solamente los registros web incompatibles de `@` y `www`, conservando los registros de correo y otros servicios. Mantener los nameservers de INC si su zona DNS se administra allí. Las direcciones de GitHub Pages no son nameservers y no se ingresan en el formulario “Cambiar Nameservers”.
+Reemplazar solamente los registros web incompatibles del dominio raíz y `www`, conservando los registros de correo y otros servicios. El editor habilitado requiere `ns1.openprovider.nl`, `ns2.openprovider.be` y `ns3.openprovider.eu`, que ya se guardaron como nameservers del dominio. Las direcciones IP de GitHub Pages no son nameservers.
 
-El panel revisado de INC muestra Nameservers y Servidores DNS Privados, pero todavía no se ha encontrado un editor de zona A/CNAME. Si no está habilitado, solicitar a INC acceso a la gestión DNS o que apliquen los registros anteriores. No es necesario contratar alojamiento web para GitHub Pages.
+El TXT `_github-pages-challenge-Nicox59.niar.cl` permite verificar la propiedad desde la configuración Pages de la cuenta GitHub. Conservarlo tras verificar. En el editor de INC el tipo TXT aparece como “SPF (txt)”. No es necesario contratar alojamiento web para GitHub Pages.
 
 Cuando GitHub valide los DNS y emita el certificado, activar Enforce HTTPS. Los cambios DNS pueden tardar hasta 24 horas.
 
-Fuentes: [dominio personalizado](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site) y [publicación desde una rama](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
+Fuentes: [dominio personalizado](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site), [publicación desde una rama](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site) y [nameservers de Openprovider](https://support.openprovider.eu/hc/en-us/articles/360026557334-How-to-change-nameservers-of-a-domain).
 
 ## Datos personales
 
