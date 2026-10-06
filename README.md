@@ -6,6 +6,8 @@ Sitio estático preparado para GitHub Pages. Incluye biografía, proyectos, tray
 
 La experiencia está en [niar.cl/dedos-interactivos/](https://niar.cl/dedos-interactivos/), con acceso desde el inicio, el menú Laboratorio y la ficha del proyecto. Incluye Hilos, Solar, Planeta, Agujero negro y filtros por gestos. Es una adaptación para navegador del proyecto local Dedos Interactivos; la aplicación de escritorio se conserva por separado.
 
+Al elegir un modo, la guía muestra cuántas manos necesita y cómo operarlo. Filtros incluye dibujos de las dos poses: pulgar e índice abiertos para blanco y negro; pulgar, índice y medio abiertos para pixelado a color. Ambas manos deben hacer la misma pose. La página también explica los controles y ofrece ayuda si el efecto no aparece.
+
 La cámara solo se solicita al pulsar **Activar cámara**. **Apagar cámara** detiene sus pistas y el detector; salir de la página también los detiene. No se solicita micrófono, no se graba video ni se envían imágenes. El modelo y los recursos de MediaPipe se sirven desde este mismo sitio y se cargan al activar la experiencia. Se necesita cámara, HTTPS (o localhost para desarrollo) y WebGL2. El rendimiento depende del dispositivo; aún requiere comprobación en teléfonos físicos.
 
 Para editarla, trabajar en `tools/dedos-web/`. Con Node.js 22.12 o superior, ejecutar:

@@ -47,13 +47,35 @@
           <button class="mode-button" type="button" data-mode="blackhole" aria-pressed="false">Agujero negro</button>
           <button id="filterWindows" class="mode-button feature-button" type="button" aria-pressed="false">Filtros por gestos</button>
         </div></fieldset>
+        <section class="mode-guide" aria-labelledby="modeGuideTitle" aria-live="polite">
+          <div class="guide-heading"><h3 id="modeGuideTitle">Cómo usar Hilos</h3><span id="modeGuideHands">1 o 2 manos</span></div>
+          <p id="modeHint">Abre tus dedos: los hilos conectan sus puntas.</p>
+          <ol id="modeGuideSteps"><li>Muestra una mano abierta, con los dedos separados y la palma hacia la cámara.</li><li>Mueve tus dedos para cambiar la forma de los hilos.</li><li>Para conectar las dos manos, muestra ambas y activa «Unir ambas manos».</li></ol>
+          <div id="filterPoseGuide" hidden>
+            <figure class="pose-card">
+              <svg viewBox="0 0 260 150" role="img" aria-label="Dos manos formando una L: pulgar e índice abiertos; medio, anular y meñique doblados">
+                <defs><g id="l-hand"><path d="M40 130V100L30 85Q25 75 30 68L43 77V31Q43 20 53 20Q63 20 63 31V78L73 74Q83 73 83 82L93 79Q103 79 103 89L111 87Q121 88 121 98V114L105 130" fill="#1e2639" stroke="#72809a" stroke-width="3"/><path d="M43 77L18 62Q8 57 5 65Q1 73 12 80L40 100M53 78V31" stroke="#c5b6fb" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M72 91V104M91 94V107M109 98V110" stroke="#72809a" stroke-width="3" stroke-linecap="round"/></g></defs>
+                <use href="#l-hand" x="8"/><use href="#l-hand" transform="translate(252 0) scale(-1 1)"/>
+              </svg>
+              <figcaption><strong>L → Blanco y negro</strong><span>Abre pulgar e índice. Dobla medio, anular y meñique. Repite la pose con la otra mano.</span></figcaption>
+            </figure>
+            <figure class="pose-card">
+              <svg viewBox="0 0 260 150" role="img" aria-label="Dos manos con pulgar, índice y medio abiertos y separados; anular y meñique doblados">
+                <defs><g id="y-hand"><path d="M40 130V100L30 85Q25 75 30 68L43 77L37 34Q35 23 45 22Q55 21 57 32L64 76L74 27Q76 16 86 18Q96 20 94 31L84 79L96 78Q106 78 106 89L113 87Q123 88 123 99V114L105 130" fill="#1e2639" stroke="#72809a" stroke-width="3"/><path d="M43 77L18 62Q8 57 5 65Q1 73 12 80L40 100M54 77L47 33M75 77L84 29" stroke="#7be7cf" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M96 93V106M113 99V110" stroke="#72809a" stroke-width="3" stroke-linecap="round"/></g></defs>
+                <use href="#y-hand" x="8"/><use href="#y-hand" transform="translate(252 0) scale(-1 1)"/>
+              </svg>
+              <figcaption><strong>Y invertida → Pixelado a color</strong><span>Abre pulgar, índice y medio. Separa índice y medio; dobla anular y meñique. Hazlo con ambas manos.</span></figcaption>
+            </figure>
+            <p class="guide-tip">La forma de tus dedos activa el filtro; no necesitas apuntar hacia abajo. El efecto aparece dentro de la ventana entre las manos, y desaparece cuando dejas de hacer la pose.</p>
+          </div>
+        </section>
         <label class="control"><span>Cámara</span><select id="cameraSelect" disabled><option>Activa la cámara primero</option></select></label>
         <label class="control"><span>Visibilidad del video</span><input id="videoOpacity" type="range" min="0" max="100" value="55"></label>
         <label class="control"><span>Intensidad del efecto</span><input id="threadIntensity" type="range" min="25" max="100" value="72"></label>
         <div class="toggles"><label class="toggle"><input id="crossHandThreads" type="checkbox" checked><span>Unir ambas manos</span></label><label class="toggle"><input id="mirrorView" type="checkbox" checked><span>Vista espejo</span></label></div>
       </div>
-      <details class="instructions" open><summary>Cómo jugar</summary><ol><li>Activa la cámara y permite su uso.</li><li>Muestra una o dos manos, con buena luz.</li><li>Cambia el efecto y mueve tus dedos.</li></ol><p id="modeHint">Abre tus dedos: los hilos conectan sus puntas. Con dos manos, aparecen puentes entre ellas.</p></details>
-      <p class="panel-note">Para Solar, Planeta y Agujero negro, muestra ambas manos y sepáralas para cambiar el tamaño.</p>
+      <details class="instructions"><summary>Qué hace cada control</summary><dl><dt>Cámara</dt><dd>Elige el dispositivo después de activar la experiencia.</dd><dt>Visibilidad del video</dt><dd>Sube el valor para ver mejor tu imagen; bájalo para resaltar los efectos.</dd><dt>Intensidad del efecto</dt><dd>Ajusta el grosor y tamaño de los elementos, según el modo.</dd><dt>Unir ambas manos</dt><dd>En Hilos, crea conexiones entre los dedos de las dos manos.</dd><dt>Vista espejo</dt><dd>Invierte la imagen como un espejo para que sea más fácil seguir tus movimientos.</dd><dt>Apagar cámara</dt><dd>Detiene la cámara y vuelve a la bienvenida.</dd></dl></details>
+      <details class="instructions"><summary>Si el efecto no aparece</summary><ul><li>Activa la cámara y permite su uso en el navegador.</li><li>Busca buena luz y deja las manos completas dentro de la imagen.</li><li>Comprueba el contador: Solar, Planeta, Agujero negro y Filtros necesitan «2 manos detectadas».</li><li>En Filtros, usa la misma pose con ambas manos, sin superponerlas. Sepáralas un poco para dar espacio a la ventana.</li><li>Mantén los dedos quietos un momento para facilitar la detección.</li></ul></details>
     </aside>
   </main>
   <script type="module" src="/src/main.js"></script>

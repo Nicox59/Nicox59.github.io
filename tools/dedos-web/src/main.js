@@ -53,6 +53,10 @@ const stopCameraButton = document.querySelector("#stopCamera");
 const welcome = document.querySelector("#welcome");
 const startMessage = document.querySelector("#startMessage");
 const modeHint = document.querySelector("#modeHint");
+const modeGuideTitle = document.querySelector("#modeGuideTitle");
+const modeGuideHands = document.querySelector("#modeGuideHands");
+const modeGuideSteps = document.querySelector("#modeGuideSteps");
+const filterPoseGuide = document.querySelector("#filterPoseGuide");
 const handCount = document.querySelector("#handCount");
 const cameraSession = new CameraSession(video, navigator.mediaDevices);
 let operationId = 0;
@@ -64,7 +68,34 @@ const MODE_HINTS = {
   solar: "Muestra ambas manos: el sistema solar aparece entre tus palmas y crece al separarlas.",
   planet: "Muestra ambas manos para sostener una Tierra entre tus palmas.",
   blackhole: "Muestra ambas manos para formar un agujero negro entre tus palmas.",
-  filters: "Haz la misma pose con ambas manos: una L con pulgar e índice para blanco y negro, o una Y invertida para el filtro de color."
+  filters: "Haz la misma pose con ambas manos para crear una ventana con filtro sobre el video."
+};
+const MODE_GUIDES = {
+  threads: { title: "Cómo usar Hilos", hands: "1 o 2 manos", steps: [
+    "Muestra una mano abierta, con los dedos separados y la palma hacia la cámara.",
+    "Mueve tus dedos para cambiar la forma de los hilos.",
+    "Para conectar las dos manos, muestra ambas y activa «Unir ambas manos»."
+  ] },
+  solar: { title: "Cómo usar Solar", hands: "2 manos", steps: [
+    "Muestra ambas manos abiertas, separadas y completas dentro de la imagen.",
+    "Sepáralas para ampliar el sistema solar; acércalas para reducirlo.",
+    "Mueve las dos manos para trasladarlo. Sube una respecto a la otra para inclinar sus órbitas."
+  ] },
+  planet: { title: "Cómo usar Planeta", hands: "2 manos", steps: [
+    "Muestra ambas manos abiertas: la Tierra aparece entre sus palmas.",
+    "Sepáralas para aumentar su tamaño; acércalas para hacerlo más pequeño.",
+    "Mueve ambas manos juntas para cambiar su posición. La animación del planeta es automática."
+  ] },
+  blackhole: { title: "Cómo usar Agujero negro", hands: "2 manos", steps: [
+    "Muestra ambas manos abiertas: el agujero negro aparece entre sus palmas.",
+    "Sepáralas o acércalas para cambiar el tamaño del agujero y su anillo.",
+    "Mueve ambas manos para desplazarlo. Sube una respecto a la otra para inclinar el anillo."
+  ] },
+  filters: { title: "Cómo activar los filtros", hands: "2 manos", steps: [
+    "Espera a que el contador indique «2 manos detectadas».",
+    "Elige una de las poses de abajo y hazla con ambas manos, separadas y sin superponerlas.",
+    "Mueve las manos para desplazar y cambiar la forma de la ventana. Elige otro modo para salir de Filtros."
+  ] }
 };
 
 const FINGER_RGB_COLORS = FINGER_COLORS.map(hexToRgb);
@@ -107,12 +138,23 @@ function syncModeControls() {
 
   filterWindowsButton?.classList.toggle("is-active", filterWindowsEnabled);
   filterWindowsButton?.setAttribute("aria-pressed", filterWindowsEnabled ? "true" : "false");
+  const guideKey = filterWindowsEnabled ? "filters" : currentMode;
+  const guide = MODE_GUIDES[guideKey];
+  modeGuideTitle.textContent = guide.title;
+  modeGuideHands.textContent = guide.hands;
+  modeHint.textContent = MODE_HINTS[guideKey];
+  modeGuideSteps.replaceChildren(...guide.steps.map(text => {
+    const step = document.createElement("li");
+    step.textContent = text;
+    return step;
+  }));
+  filterPoseGuide.hidden = !filterWindowsEnabled;
 }
 
 function getReadyStatus() {
   if (!isRunning) return "Activa la cámara para comenzar.";
   if (filterWindowsEnabled) {
-    return "Filtros activos. Prueba los gestos indicados en Cómo jugar.";
+    return "Filtros activos. Sigue las poses de la guía.";
   }
 
   if (currentMode === MODE_BLACK_HOLE) {
@@ -1383,7 +1425,6 @@ function buildRenderData(projectedHands, intensity, pulse) {
 function setMode(nextMode) {
   currentMode = nextMode;
   filterWindowsEnabled = false;
-  modeHint.textContent = MODE_HINTS[nextMode];
   syncModeControls();
   if (!isStarting && !isSwitching) setStatus(getReadyStatus());
 }
@@ -1392,7 +1433,6 @@ function setFilterWindowsEnabled(nextState) {
   filterWindowsEnabled = nextState;
   syncModeControls();
 
-  modeHint.textContent = MODE_HINTS[nextState ? "filters" : currentMode];
   if (!isStarting && !isSwitching) setStatus(getReadyStatus());
 }
 
