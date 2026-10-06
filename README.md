@@ -19,7 +19,7 @@ npm run build
 
 El resultado se guarda en `dedos-interactivos/` y debe publicarse junto al portafolio. El generador Python no recompila esta experiencia. El script de preparación copia los recursos WASM de MediaPipe 0.10.35 y reutiliza el modelo publicado; si falta, descarga el modelo oficial. `node_modules/` y `public/` de la fuente están excluidos de Git. Los archivos publicados incluyen la licencia Apache 2.0 de MediaPipe. Referencia: [Hand Landmarker para web](https://developers.google.com/edge/mediapipe/solutions/vision/hand_landmarker/web_js).
 
-Las pruebas automatizadas cubren permisos pendientes, apagado durante la apertura, cambio de cámara fallido, fallo de reproducción y cierre de la cámara anterior al cambiar correctamente. La detección de manos y el cambio entre cámaras físicas deben comprobarse también en el navegador.
+Las seis pruebas automatizadas cubren permisos pendientes, apagado durante la apertura, cambio de cámara fallido, fallo de reproducción y cierre de la cámara anterior al cambiar correctamente. El 6 de octubre de 2026 se comprobó en Chrome, desde niar.cl, la detección de una y dos manos con la cámara HP Wide Vision HD, los controles de los cinco modos y el apagado. Sigue pendiente probar los gestos específicos de los filtros, teléfonos físicos y el cambio entre varias cámaras físicas.
 
 ## Editar contenido
 
