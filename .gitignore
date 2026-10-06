@@ -2,3 +2,5 @@ __pycache__/
 .preview/
 .local/
 *.log
+tools/dedos-web/node_modules/
+tools/dedos-web/public/

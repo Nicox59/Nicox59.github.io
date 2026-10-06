@@ -2,6 +2,25 @@
 
 Sitio estático preparado para GitHub Pages. Incluye biografía, proyectos, trayectoria y contacto. No necesita servidor Python ni dependencias para publicarse.
 
+## Dedos Interactivos
+
+La experiencia está en [niar.cl/dedos-interactivos/](https://niar.cl/dedos-interactivos/), con acceso desde el inicio, el menú Laboratorio y la ficha del proyecto. Incluye Hilos, Solar, Planeta, Agujero negro y filtros por gestos. Es una adaptación para navegador del proyecto local Dedos Interactivos; la aplicación de escritorio se conserva por separado.
+
+La cámara solo se solicita al pulsar **Activar cámara**. **Apagar cámara** detiene sus pistas y el detector; salir de la página también los detiene. No se solicita micrófono, no se graba video ni se envían imágenes. El modelo y los recursos de MediaPipe se sirven desde este mismo sitio y se cargan al activar la experiencia. Se necesita cámara, HTTPS (o localhost para desarrollo) y WebGL2. El rendimiento depende del dispositivo; aún requiere comprobación en teléfonos físicos.
+
+Para editarla, trabajar en `tools/dedos-web/`. Con Node.js 22.12 o superior, ejecutar:
+
+```powershell
+cd tools/dedos-web
+npm ci
+npm test
+npm run build
+```
+
+El resultado se guarda en `dedos-interactivos/` y debe publicarse junto al portafolio. El generador Python no recompila esta experiencia. El script de preparación copia los recursos WASM de MediaPipe 0.10.35 y reutiliza el modelo publicado; si falta, descarga el modelo oficial. `node_modules/` y `public/` de la fuente están excluidos de Git. Los archivos publicados incluyen la licencia Apache 2.0 de MediaPipe. Referencia: [Hand Landmarker para web](https://developers.google.com/edge/mediapipe/solutions/vision/hand_landmarker/web_js).
+
+Las pruebas automatizadas cubren permisos pendientes, apagado durante la apertura, cambio de cámara fallido, fallo de reproducción y cierre de la cámara anterior al cambiar correctamente. La detección de manos y el cambio entre cámaras físicas deben comprobarse también en el navegador.
+
 ## Editar contenido
 
 Editar `tools/build.py` y ejecutar `python tools/build.py`. El generador actualiza `index.html`, `proyectos/index.html`, `cv/index.html`, `contacto/index.html` y `404.html`. Los archivos HTML generados deben incluirse al publicar cambios.
