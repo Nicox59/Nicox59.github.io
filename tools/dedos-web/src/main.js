@@ -83,7 +83,7 @@ const MODE_GUIDES = {
   ] },
   planet: { title: "Cómo usar Planeta", hands: "2 manos", steps: [
     "Muestra ambas manos abiertas: la Tierra aparece entre sus palmas.",
-    "Sepáralas para aumentar su tamaño; acércalas para hacerlo más pequeño.",
+    "Sepáralas para aumentar su tamaño; acércalas para reducir su tamaño.",
     "Mueve ambas manos juntas para cambiar su posición. La animación del planeta es automática."
   ] },
   blackhole: { title: "Cómo usar Agujero negro", hands: "2 manos", steps: [
@@ -140,6 +140,7 @@ function syncModeControls() {
   filterWindowsButton?.setAttribute("aria-pressed", filterWindowsEnabled ? "true" : "false");
   const guideKey = filterWindowsEnabled ? "filters" : currentMode;
   const guide = MODE_GUIDES[guideKey];
+  crossHandThreadsControl.closest("label").hidden = guideKey !== "threads";
   modeGuideTitle.textContent = guide.title;
   modeGuideHands.textContent = guide.hands;
   modeHint.textContent = MODE_HINTS[guideKey];

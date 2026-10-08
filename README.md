@@ -25,7 +25,7 @@ Las seis pruebas automatizadas cubren permisos pendientes, apagado durante la ap
 
 ## Editar contenido
 
-Todas las páginas comparten el tema oscuro de NIAR: fondo azul muy oscuro, texto claro, acentos cian y botones azules. La paleta general está en ssets/site.css; el inicio añade el recorrido con ssets/travelling.css, y Laboratorio conserva su distribución de controles usando la misma paleta y las tipografías DM Sans y Manrope en 	ools/dedos-web/src/style.css. Los bloques de contacto heredan el texto claro del tema. El generador versiona el CSS compartido para cargar las actualizaciones después de publicarlas.
+Todas las páginas comparten el tema oscuro de NIAR: fondo azul muy oscuro, texto claro, acentos cian y botones azules. La paleta general está en assets/site.css; el inicio añade el recorrido con assets/travelling.css, y Laboratorio conserva su distribución de controles usando la misma paleta y las tipografías DM Sans y Manrope en tools/dedos-web/src/style.css. Los bloques de contacto heredan el texto claro del tema. El generador versiona el CSS compartido para cargar las actualizaciones después de publicarlas.
 
 Se revisaron las vistas de escritorio, móvil de 320 × 568 y 390 × 844 y la orientación horizontal del recorrido; el menú móvil, el final de la espada y el contraste del contacto se comprobaron en el navegador. Estas comprobaciones usan tamaños de ventana, sin sustituir una prueba de rendimiento en un teléfono físico.
 
@@ -86,3 +86,29 @@ Fuentes: [dominio personalizado](https://docs.github.com/en/pages/configuring-a-
 ## Datos personales
 
 El contenido profesional se adaptó del currículum aportado por el propietario. No se publica el teléfono, la comuna ni el documento Word original. El correo de contacto fue aprobado por el propietario para su publicación pública.
+
+
+## Contenido profesional y descarga del CV
+
+Las fichas de proyectos muestran propósito, aporte personal, estado, alcance y
+evidencia. Sus textos están en `tools/project_details.py`; no se publican enlaces
+a repositorios privados ni se afirma que un prototipo esté en producción.
+Las capturas reales de RoomMapper y del laboratorio web están en `assets/projects/`.
+El relato distingue visión artificial de las integraciones MCP y conserva los
+límites de observación pasiva de DJI, reconstrucción posterior de RoomMapper e
+integridad técnica de NFC.
+
+El CV preparado está en `output/pdf/CV-Nicolas-Araya.pdf`, con dos páginas A4,
+fuentes incorporadas y enlaces de contacto. Para regenerarlo, ejecutar
+`python tools/build_cv_pdf.py` con ReportLab disponible y después
+`python tools/build.py`. El PDF se revisó renderizando sus dos páginas. Trayectoria
+conserva además el botón de impresión y reglas específicas para papel.
+
+Los datos de formación sin respaldo adicional conservan su precisión anterior:
+la práctica DXC sigue indicando 2025; no se añade una escala a 9,20 ni instituciones
+o fechas no confirmadas para los cursos de redes y Linux.
+
+Los controles del recorrido incluyen etiquetas en foco de teclado y al pasar el
+cursor, y el enlace para saltarlo tiene mayor contraste. Contacto permite copiar
+el correo con confirmación accesible y selección manual si el navegador impide
+la copia. En el laboratorio, «Unir ambas manos» se muestra solo en Hilos.

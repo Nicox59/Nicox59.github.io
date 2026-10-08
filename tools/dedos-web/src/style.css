@@ -11,3 +11,5 @@
 @media(max-width:650px){.lab-header{height:66px;padding:0 18px}.lab-label{display:none}.app-shell{display:block}.stage,.welcome{min-height:620px}.welcome{padding:20px 24px 60px}.welcome-art{width:310px;max-width:100%;margin-top:0}.welcome h1{font-size:42px}.welcome-copy{font-size:14px}.control-panel{border-left:0;border-top:1px solid #293244;padding:26px 24px}.controls{grid-template-columns:1fr 1fr;gap:22px 18px}.controls>fieldset,.controls>.control:first-of-type,.toggles{grid-column:1/-1}.toggles{display:flex;flex-wrap:wrap;gap:20px}.panel-heading{display:flex;align-items:center;justify-content:space-between;gap:14px}.panel-heading h2{font-size:20px;margin-bottom:0}.stop-button{max-width:100px}.stage-caption{bottom:18px;font-size:9px}body[data-camera=running] .stage{min-height:64svh}body[data-camera=running] .welcome{min-height:64svh}}
 
 h1,h2,h3,.brand{font-family:"Manrope",Arial,sans-serif}.brand span{box-shadow:0 0 16px #54d9ff}
+
+.toggle[hidden]{display:none}
