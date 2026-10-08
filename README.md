@@ -94,6 +94,14 @@ Las fichas de proyectos muestran propósito, aporte personal, estado, alcance y
 evidencia. Sus textos están en `tools/project_details.py`; no se publican enlaces
 a repositorios privados ni se afirma que un prototipo esté en producción.
 Las capturas reales de RoomMapper y del laboratorio web están en `assets/projects/`.
+También se incluyen seis fotografías originales de biomodelos, sin modificar,
+con vista previa en Inicio y una galería ampliable en Proyectos. La selección y
+los pies de fotografía se mantienen en `tools/project_evidence.py`.
+El panel UNLi usa su interfaz real con datos ficticios de demostración y un aviso
+visible; no contiene nombres, RUT, correos ni registros reales de estudiantes.
+La captura DJI muestra el panel sin conexión a un dron y la del juego corresponde
+a una vista de desarrollo. Estas imágenes documentan interfaces y piezas físicas;
+no se presentan como validaciones clínicas ni resultados de vuelos.
 El relato distingue visión artificial de las integraciones MCP y conserva los
 límites de observación pasiva de DJI, reconstrucción posterior de RoomMapper e
 integridad técnica de NFC.

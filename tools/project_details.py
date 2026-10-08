@@ -1,4 +1,5 @@
 """Aportes y alcance de proyectos; estados sin afirmar despliegues no confirmados."""
+from project_evidence import DENTAL_PHOTOS
 
 PROJECT_DETAILS = {
     'Sistema UNLi': {
@@ -6,8 +7,9 @@ PROJECT_DETAILS = {
         'contribution': 'Desarrollé el panel Flask y la aplicación Android con registro QR. Integré bases de datos, importación y exportación de alumnos y flujos de Microsoft 365 para avisos y habilitaciones.',
         'status': 'Desarrollo activo',
         'scope': 'Panel administrativo y aplicación Android. El registro QR y la gestión de habilitaciones forman parte del mismo flujo.',
-        'evidence': 'Código del panel, lector QR y documentación del proyecto.',
+        'evidence': 'Captura de la interfaz administrativa con datos de demostración. Los valores mostrados son ejemplos; no se publican registros personales ni métricas reales de estudiantes.',
         'links': [],
+        'image': ('unli-demostracion.jpg', 'Panel administrativo UNLi con datos de demostración y cuenta de ejemplo.', 'Interfaz real con datos de demostración. No contiene registros personales reales.'),
     },
     'PatientAR': {
         'purpose': 'Explorar modelos 3D en realidad mixta para demostraciones y experiencias de salud y educación.',
@@ -30,8 +32,9 @@ PROJECT_DETAILS = {
         'contribution': 'Integré Android/Kotlin con DJI Mobile SDK y un servidor Python para recibir video H.264 y telemetría. Añadí detección YOLO, un panel web y registro de eventos.',
         'status': 'Prototipo de observación',
         'scope': 'Observación pasiva con DJI Mini 3 Pro. La plataforma recibe información; no presenta navegación autónoma ni control de vuelo por IA.',
-        'evidence': 'Aplicación Android, servidor de detección y panel web desarrollados para la integración.',
+        'evidence': 'Captura real del panel de video, telemetría y observaciones; la vista mostrada no tiene un dron conectado.',
         'links': [],
+        'image': ('dji-panel.jpg', 'Panel de observación DJI esperando una conexión, sin telemetría ni coordenadas reales.', 'Panel de observación en su estado de espera, sin dron conectado.'),
     },
     'Dedos Interactivos': {
         'purpose': 'Explorar las manos como interfaz para controlar efectos visuales en tiempo real.',
@@ -64,15 +67,17 @@ PROJECT_DETAILS = {
         'contribution': 'En Odontología digital para el Hospital Félix Bulnes junto a la USS, participé en diseño e impresión de biomodelos y realidad mixta (septiembre-diciembre de 2025, 60 horas). Por separado, diseño piezas, cajas y soportes CAD para simulación obstétrica.',
         'status': 'Prototipado y participación académica',
         'scope': 'Archivos editables en Inventor y exportación STL. El trabajo de odontología digital y el diseño de simuladores obstétricos corresponden a aportes distintos.',
-        'evidence': 'Modelos CAD editables y archivos STL de los componentes desarrollados.',
+        'evidence': 'Fotografías del modelo digital, la impresión y los biomodelos físicos del proyecto de Odontología digital. Las imágenes se muestran tal como están en el archivo del proyecto.',
         'links': [],
+        'gallery': DENTAL_PHOTOS,
     },
     'Juego para admisión USS': {
         'purpose': 'Proponer una actividad demostrativa de interacción y colaboración para admisión USS.',
         'contribution': 'Desarrollé el juego cooperativo en Python/Pygame, los controles por teclado y mando y el empaquetado para Windows.',
         'status': 'Desarrollo para Windows',
-        'scope': 'Participación cooperativa en escenarios de ambientación chilena, con controles por teclado o mando.',
-        'evidence': 'Juego empaquetado como ejecutable para actividades demostrativas.',
+        'scope': 'Juego de aviones cooperativo con escenarios de ambientación chilena y un jefe final. Admite teclado y mando para la participación de los jugadores.',
+        'evidence': 'Captura de desarrollo del escenario Santiago, con el avión, proyectiles y panel de juego.',
         'links': [],
+        'image': ('juego-santiago.png', 'Captura de desarrollo del juego de aviones USS en el escenario Santiago.', 'Captura de desarrollo del escenario Santiago del juego para admisión USS.'),
     },
 }

@@ -8,7 +8,7 @@ if (toggle && nav) {
     nav.classList.toggle('is-open', open);
   });
   nav.addEventListener('click', (event) => { if (event.target.closest('a')) closeMenu(); });
-  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { closeMenu(); toggle.focus(); } });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && nav.classList.contains('is-open')) { closeMenu(); toggle.focus(); } });
   window.matchMedia('(min-width: 701px)').addEventListener('change', closeMenu);
 }
 document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
@@ -31,3 +31,53 @@ document.querySelectorAll('[data-copy-email]').forEach((button) => {
     }
   });
 });
+
+const revealLinkedProject = () => {
+  const id = location.hash.slice(1);
+  const project = document.getElementById(id);
+  if (project?.classList.contains('project')) project.querySelector('details').open = true;
+};
+revealLinkedProject();
+window.addEventListener('hashchange', revealLinkedProject);
+
+const evidenceViewer = document.querySelector('#evidence-viewer');
+if (evidenceViewer) {
+  let pictures = [];
+  let pictureIndex = 0;
+  const image = evidenceViewer.querySelector('#evidence-viewer-image');
+  const caption = evidenceViewer.querySelector('#evidence-viewer-caption');
+  const count = evidenceViewer.querySelector('#evidence-viewer-count');
+  const previous = evidenceViewer.querySelector('[data-gallery-prev]');
+  const next = evidenceViewer.querySelector('[data-gallery-next]');
+  const showPicture = (index) => {
+    pictureIndex = (index + pictures.length) % pictures.length;
+    const button = pictures[pictureIndex];
+    image.src = button.dataset.galleryImage;
+    image.alt = button.querySelector('img').alt;
+    caption.textContent = button.dataset.galleryCaption;
+    count.textContent = `${pictureIndex + 1} / ${pictures.length}`;
+    previous.disabled = next.disabled = pictures.length < 2;
+  };
+  document.querySelectorAll('[data-gallery-image]').forEach(button => {
+    button.addEventListener('click', () => {
+      const gallery = button.closest('.evidence-gallery');
+      pictures = [...gallery.querySelectorAll('[data-gallery-image]')];
+      evidenceViewer.querySelector('#evidence-viewer-title').textContent = gallery.dataset.project;
+      showPicture(pictures.indexOf(button));
+      evidenceViewer.showModal();
+    });
+  });
+  evidenceViewer.querySelector('.evidence-close').addEventListener('click', () => evidenceViewer.close());
+  previous.addEventListener('click', () => showPicture(pictureIndex - 1));
+  next.addEventListener('click', () => showPicture(pictureIndex + 1));
+  evidenceViewer.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      showPicture(pictureIndex + (event.key === 'ArrowRight' ? 1 : -1));
+    }
+  });
+  evidenceViewer.addEventListener('click', event => {
+    const rect = evidenceViewer.getBoundingClientRect();
+    if (event.target === evidenceViewer && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) evidenceViewer.close();
+  });
+}
