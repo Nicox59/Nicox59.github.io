@@ -1,0 +1,21 @@
+{
+  "name": "niar-sword-travelling",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "optimize": "node scripts/optimize.mjs"
+  },
+  "dependencies": {
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
+    "meshoptimizer": "1.1.1",
+    "sharp": "0.35.5",
+    "vite": "8.3.4"
+  }
+}

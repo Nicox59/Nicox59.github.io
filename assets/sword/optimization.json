@@ -1,0 +1,31 @@
+{
+  "sourceBytes": 91339016,
+  "outputBytes": 4866912,
+  "triangles": 94090,
+  "textures": [
+    {
+      "name": "texture_pbr_20250901_normal",
+      "bytes": 317444,
+      "size": [
+        1536,
+        1536
+      ]
+    },
+    {
+      "name": "texture_pbr_20250901",
+      "bytes": 594530,
+      "size": [
+        1536,
+        1536
+      ]
+    },
+    {
+      "name": "texture_pbr_20250901_metallic-texture_pbr_20250901_roughness",
+      "bytes": 41640,
+      "size": [
+        1536,
+        1536
+      ]
+    }
+  ]
+}

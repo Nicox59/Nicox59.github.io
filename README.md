@@ -25,6 +25,21 @@ Las seis pruebas automatizadas cubren permisos pendientes, apagado durante la ap
 
 ## Editar contenido
 
+El inicio incluye un recorrido 3D por la espada de nueve runas: el desplazamiento acerca la cámara a cada tecnología y al final vuelve a mostrar la espada completa. La franja de iconos y circuitos se toma directamente de la imagen original y se aplica al material de la superficie real del modelo, sin una placa rectangular flotante. Se usa la región de mayor resolución que corresponde al recorte aportado por el usuario; el recorte se conserva en `assets/sword/inlay-reference.png`. Los SVG de las tarjetas de texto se mantienen por separado. El fondo oscuro se estrecha y se funde con el contorno junto a la empuñadura y la punta, conservando los detalles laterales originales. La posición de cada runa se comparte con el recorrido de cámara. La vista inicial muestra las nueve runas. Al entrar al capítulo 01 se ocultan las siguientes; cada nuevo capítulo revela su icono y conserva los anteriores, con una transición suave que también se invierte al subir. Al enfocar una tecnología, solo aumenta la emisión de los píxeles azules luminosos de su icono, dentro de una máscara individual. El brillo de los circuitos dorados y los costados permanece constante. El aura azul se anima con shaders y partículas. Los enlaces, textos y navegación siguen disponibles en la vista ligera, cuando WebGL falla y con la preferencia de movimiento reducido. Los botones permiten pausar el aura, cambiar a la vista ligera o saltar el recorrido. La animación se detiene fuera del recorrido o al ocultar la pestaña.
+
+Contenido y símbolos: `tools/sword_content.py`. Diseño del inicio: `assets/travelling.css`. Escena 3D: `tools/sword-web/src/main.js`. Para regenerar:
+
+```powershell
+python tools/build.py
+cd tools/sword-web
+npm ci
+npm run build
+```
+
+El modelo original en `Downloads/Espada travelling` se conserva. La copia web en `assets/sword/sword.glb` ocupa 4.866.912 bytes y tiene 94.090 triángulos; las texturas WebP miden 1536 × 1536. El informe está en `assets/sword/optimization.json`. Para volver a optimizar el original, ejecutar desde `tools/sword-web`: `npm run optimize -- "RUTA_DEL_ORIGINAL.glb"`. Este comando también copia la imagen de referencia desde la misma carpeta.
+
+Three.js se incluye en el bundle local, sin CDN. Su licencia MIT se conserva en `assets/travelling/THREE-LICENSE.txt`. Revisar el recorrido en escritorio y móvil después de cambiar el modelo o las posiciones de las runas; el rendimiento en teléfonos físicos depende del equipo y aún requiere una prueba real.
+
 Editar `tools/build.py` y ejecutar `python tools/build.py`. El generador actualiza `index.html`, `proyectos/index.html`, `cv/index.html`, `contacto/index.html` y `404.html`. Los archivos HTML generados deben incluirse al publicar cambios.
 
 El diseño está en `assets/site.css`; el menú móvil y la impresión del CV están en `assets/site.js`. Las ilustraciones SVG son decorativas y no representan capturas de las aplicaciones.

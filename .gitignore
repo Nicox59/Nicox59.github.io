@@ -4,3 +4,4 @@ __pycache__/
 *.log
 tools/dedos-web/node_modules/
 tools/dedos-web/public/
+tools/sword-web/node_modules/
