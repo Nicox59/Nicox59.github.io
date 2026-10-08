@@ -11,13 +11,21 @@ PROJECT_DETAILS = {
         'links': [],
         'image': ('unli-demostracion.jpg', 'Panel administrativo UNLi con datos de demostración y cuenta de ejemplo.', 'Interfaz real con datos de demostración. No contiene registros personales reales.'),
     },
-    'PatientAR': {
-        'purpose': 'Explorar modelos 3D en realidad mixta para demostraciones y experiencias de salud y educación.',
-        'contribution': 'Desarrollé la interacción en Unity/C#: selección, transparencia y manipulación con una o dos manos. Integré OpenXR y XR Interaction Toolkit y herramientas para transmitir la vista del Quest al PC.',
+    'OdontologiaRA': {
+        'purpose': 'Explorar modelos anatómicos craneales y odontológicos en realidad mixta para demostraciones y educación.',
+        'contribution': 'Desarrollé en Unity/C# la selección de modelos anatómicos, el control de transparencia y la manipulación con una o dos manos. Integré OpenXR, XR Interaction Toolkit y passthrough para explorar los modelos en Meta Quest 3.',
         'status': 'Prototipo de realidad mixta',
-        'scope': 'En Meta Quest 3, el passthrough permite ver el entorno real mientras se exploran los modelos digitales. La transmisión al PC facilita las demostraciones.',
-        'evidence': 'Funciones desarrolladas: seleccionar un modelo, moverlo con una mano y escalarlo con ambas. La experiencia requiere un visor; no tiene una demostración web.',
-        'links': [],
+        'scope': 'Visualización anatómica y odontológica en Meta Quest 3, combinando modelos digitales con el entorno real. Prototipo para exploración y demostración educativa.',
+        'evidence': 'Proyecto Unity con modelos anatómicos, menú de selección, transparencia y controles de manipulación. La experiencia requiere un visor; no tiene una demostración web.',
+        'links': [('Explorar Mapa 3D', '/proyectos/#mapa-3d')],
+    },
+    'Mapa 3D': {
+        'purpose': 'Explorar y manipular un modelo tridimensional del terreno USS dentro del entorno real.',
+        'contribution': 'Adapté el terreno USS a Unity con versiones para Quest y mayor detalle. Integré selección de modelos, passthrough y controles para mover, girar y escalar el mapa con una o dos manos.',
+        'status': 'Prototipo de realidad mixta',
+        'scope': 'Modelo de terreno para exploración espacial en Meta Quest con OpenXR y XR Interaction Toolkit. La experiencia requiere un visor y permite seleccionar entre versiones para Quest y mayor detalle.',
+        'evidence': 'Proyecto Unity con la escena, los modelos TerrenoUSS_Quest y TerrenoUSS_HQ, y scripts de selección y manipulación con las manos.',
+        'links': [('Explorar OdontologiaRA', '/proyectos/#odontologiara')],
     },
     'Integraciones MCP': {
         'purpose': 'Conectar asistentes de IA con herramientas de modelado y desarrollo para ejecutar tareas en el entorno local.',

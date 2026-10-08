@@ -4,7 +4,7 @@ from html import escape
 
 CHAPTERS = [
     ('Inteligencia artificial', 'Ideas que aprenden.', 'Integro visión artificial con YOLO y trabajo con modelos locales en Ollama para interpretar imágenes y explorar tareas de IA.', 'Python · YOLO · Ollama', 'Explorar visión artificial', './proyectos/', 'M32 12c-8-10-20-3-18 5-9 0-13 12-6 17-8 9-1 20 8 19 1 8 12 8 16 1V12m0 0c8-10 20-3 18 5 9 0 13 12 6 17 8 9 1 20-8 19-1 8-12 8-16 1M22 18v8l-6 5m6 9 4 5m16-27v8l6 5m-6 9-4 5'),
-    ('Realidad mixta', 'El mundo, aumentado.', 'Modelos que puedes explorar, mover y escalar con tus manos. Experiencias que conectan lo digital con el espacio que te rodea.', 'Unity · OpenXR · Meta Quest', 'Explorar PatientAR', './proyectos/', 'M10 16h44a4 4 0 0 1 4 4v18a6 6 0 0 1-6 6h-7l-7-7H26l-7 7h-7a6 6 0 0 1-6-6V20a4 4 0 0 1 4-4ZM6 25H2v12h4m52-12h4v12h-4M23 50l9-5 9 5v9l-9 5-9-5Zm0 0 9 5 9-5m-9 5v9'),
+    ('Realidad mixta', 'El mundo, aumentado.', 'Modelos que puedes explorar, mover y escalar con tus manos. Experiencias que conectan lo digital con el espacio que te rodea.', 'Unity · OpenXR · Meta Quest', 'Explorar OdontologiaRA', './proyectos/', 'M10 16h44a4 4 0 0 1 4 4v18a6 6 0 0 1-6 6h-7l-7-7H26l-7 7h-7a6 6 0 0 1-6-6V20a4 4 0 0 1 4-4ZM6 25H2v12h4m52-12h4v12h-4M23 50l9-5 9 5v9l-9 5-9-5Zm0 0 9 5 9-5m-9 5v9'),
     ('Robótica y visión', 'Ver. Detectar. Comprender.', 'Video, detección de objetos y telemetría para observar el entorno. Software que recibe señales del mundo físico y las convierte en información.', 'DJI SDK · Python · Visión artificial', 'Visión y telemetría DJI', './proyectos/', 'M14 13h12m12 0h12M20 9v8m24-8v8M25 22l-5-7m19 7 5-7M22 23h20v9H22ZM32 38a11 11 0 1 0 0 22 11 11 0 0 0 0-22Zm-7 11 5 4 9-9M32 34v4m0 22v3M17 49h4m22 0h4'),
     ('Interacción por gestos', 'Tus manos son la interfaz.', 'Sin controles entre tú y la experiencia. El movimiento de tus dedos se transforma en hilos, planetas y efectos visuales en tiempo real.', 'MediaPipe · JavaScript · WebGL', 'Probar Dedos Interactivos', './dedos-interactivos/', 'M22 37V17a3 3 0 0 1 6 0v16V9a3 3 0 0 1 6 0v24V13a3 3 0 0 1 6 0v22-13a3 3 0 0 1 6 0v18l4-8a3 3 0 0 1 6 2l-7 21-8 9v5H24v-7L10 36a3 3 0 0 1 4-4l8 5'),
     ('Diseño e impresión 3D', 'Del píxel a la materia.', 'Del diseño CAD a piezas físicas para educación y simulación. Desarrollo piezas, biomodelos y componentes editables para impresión 3D.', 'Inventor · Fusion · Blender', 'Biomodelos y simuladores', './proyectos/', 'M32 5 57 19v28L32 61 7 47V19Zm-25 14 25 14 25-14M32 33v28M20 12l24 14v13l-12 7-12-7V26l24-14M14 43l4 2m6 3 4 2m9 0 4-2m6-3 4-2'),
@@ -19,7 +19,7 @@ def sword_story():
     runes = root / 'assets/sword/runes'
     runes.mkdir(parents=True, exist_ok=True)
     articles, nav = [], []
-    project_ids = ['vision-dji', 'patientar', 'vision-dji', '', 'biomodelos', 'android-nfc', 'integraciones-mcp', 'sistema-unli', 'videojuegos']
+    project_ids = ['vision-dji', 'odontologiara', 'vision-dji', '', 'biomodelos', 'android-nfc', 'integraciones-mcp', 'sistema-unli', 'videojuegos']
     for i, (area, title, text, stack, cta, link, drawing) in enumerate(CHAPTERS, 1):
         if project_ids[i-1]:
             link += '#' + project_ids[i-1]

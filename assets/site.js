@@ -34,7 +34,7 @@ document.querySelectorAll('[data-copy-email]').forEach((button) => {
 
 const revealLinkedProject = () => {
   const id = location.hash.slice(1);
-  const project = document.getElementById(id);
+  const project = document.getElementById(id)?.closest('.project');
   if (project?.classList.contains('project')) project.querySelector('details').open = true;
 };
 revealLinkedProject();

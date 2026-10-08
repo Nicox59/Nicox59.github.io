@@ -18,3 +18,4 @@
 @media print{.evidence-dialog{display:none!important}.evidence-thumbnail>span{display:none}.evidence-highlight{break-inside:avoid}}
 .project-cover-note{font-size:11px!important;line-height:1.5!important;color:var(--muted);margin:9px 0 15px!important}
 .evidence-viewer-image{flex-shrink:0}.evidence-viewer-image img{max-height:min(65svh,calc(92svh - 200px))}@media(max-width:700px){.evidence-viewer-image img{max-height:min(58svh,calc(94svh - 230px))}}
+.project-visual[data-style=terrain]{background:#0d1723}

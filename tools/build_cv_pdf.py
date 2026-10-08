@@ -34,7 +34,7 @@ def generate():
         'title': ParagraphStyle('title', fontName='CVBold', fontSize=10.5, leading=15, textColor=INK, spaceAfter=3, keepWithNext=True),
         'meta': ParagraphStyle('meta', fontName='CV', fontSize=8.5, leading=11.5, textColor=MUTED, spaceAfter=3),
         'body': ParagraphStyle('body', fontName='CV', fontSize=9.5, leading=13.5, textColor=INK, spaceAfter=5),
-        'project': ParagraphStyle('project', fontName='CV', fontSize=9, leading=12.5, textColor=INK, spaceAfter=6),
+        'project': ParagraphStyle('project', fontName='CV', fontSize=9, leading=12.5, textColor=INK, spaceAfter=4),
     }
     def p(text, kind='body'):
         return Paragraph(text, styles[kind])
@@ -67,6 +67,10 @@ def generate():
             contribution = info['contribution']
         elif name == 'Lectura de cédula NFC':
             contribution = 'Desarrollé OCR local y lectura del chip con BAC/PACE, JMRTD y comprobaciones de integridad. El prototipo no equivale a identidad verificada.'
+        elif name == 'OdontologiaRA':
+            contribution = 'Desarrollé selección, transparencia y manipulación anatómica con una o dos manos en Unity/OpenXR para Meta Quest 3.'
+        elif name == 'Mapa 3D':
+            contribution = 'Adapté el terreno USS para Quest, con selección de detalle y controles para mover, girar y escalar con las manos.'
         else:
             contribution = info['contribution']
         story.append(KeepTogether([
@@ -75,10 +79,9 @@ def generate():
             p(plain(contribution), 'project'),
         ]))
     story.extend([
-        p('Tecnologías principales', 'section'),
+        p('Tecnologías y herramientas', 'section'),
         p('Python, JavaScript, Kotlin y C#; Flask, Electron, Unity y MediaPipe. PostgreSQL, Supabase, APIs, Power Automate, YOLO, MCP, OpenXR, ARCore e Inventor.', 'project'),
-        p('Herramientas complementarias', 'section'),
-        p('TypeScript, Java, C, React, Kivy, PySide6, SQLAlchemy, WebSocket, Forms, Excel, Power BI, Ollama, Fusion, Blender, ESP32 y Raspberry Pi.', 'project'),
+        p('<b>Complementarias:</b> TypeScript, Java, C, React, Kivy, PySide6, SQLAlchemy, WebSocket, Forms, Excel, Power BI, Ollama, Fusion, Blender, ESP32 y Raspberry Pi.', 'project'),
     ])
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     def frame(canvas, doc):

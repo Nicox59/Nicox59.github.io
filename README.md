@@ -99,6 +99,11 @@ El contenido profesional se adaptó del currículum aportado por el propietario.
 Las fichas de proyectos muestran propósito, aporte personal, estado, alcance y
 evidencia. Sus textos están en `tools/project_details.py`; no se publican enlaces
 a repositorios privados ni se afirma que un prototipo esté en producción.
+Los proyectos Unity se presentan por separado: OdontologiaRA para exploración
+anatómica y odontológica, y Mapa 3D para manipulación del terreno USS. El nombre
+OdontologiaRA sustituye a PatientAR en el portafolio y en el CV, conservando
+`#patientar` como ancla compatible con los enlaces anteriores. Las carpetas y el
+código de los proyectos Unity conservan sus nombres originales.
 Las capturas reales de RoomMapper y del laboratorio web están en `assets/projects/`.
 NFC y MCP usan portadas conceptuales generadas con imagegen, identificadas como
 ilustraciones de IA. Los prompts y los archivos finales se documentan en
