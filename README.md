@@ -100,6 +100,14 @@ Las fichas de proyectos muestran propósito, aporte personal, estado, alcance y
 evidencia. Sus textos están en `tools/project_details.py`; no se publican enlaces
 a repositorios privados ni se afirma que un prototipo esté en producción.
 Las capturas reales de RoomMapper y del laboratorio web están en `assets/projects/`.
+NFC y MCP usan portadas conceptuales generadas con imagegen, identificadas como
+ilustraciones de IA. Los prompts y los archivos finales se documentan en
+`tools/project_image_prompts.md`. NFC incluye además una vista ampliable del menú,
+recreada a partir del diseño Android del prototipo con campos vacíos; el aviso
+indica que no es una captura de un dispositivo. El diseño de esa vista está en
+`tools/nfc_menu_preview.html`.
+El favicon celeste incluye una versión en su URL para renovar las copias que
+el navegador conserve del icono anterior.
 También se incluyen seis fotografías originales de biomodelos, sin modificar,
 con vista previa en Inicio y una galería ampliable en Proyectos. La selección y
 los pies de fotografía se mantienen en `tools/project_evidence.py`.

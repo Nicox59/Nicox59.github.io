@@ -54,8 +54,9 @@ def shell(title, body, active='', depth=0, description=BIO):
     body_class = ' class="sword-home"' if active == 'inicio' else ''
     site_version = sha256((ROOT / 'assets/site.css').read_bytes().replace(b'\r\n', b'\n')).hexdigest()[:12]
     script_version = sha256((ROOT / 'assets/site.js').read_bytes().replace(b'\r\n', b'\n')).hexdigest()[:12]
+    favicon_version = sha256((ROOT / 'assets/favicon.svg').read_bytes().replace(b'\r\n', b'\n')).hexdigest()[:12]
     return f'''<!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{escape(title)} | NIAR</title><meta name="description" content="{escape(description, quote=True)}"><meta name="theme-color" content="#060a13"><meta property="og:title" content="{escape(title, quote=True)} | NIAR"><meta property="og:description" content="{escape(description, quote=True)}"><meta property="og:type" content="website"><meta property="og:locale" content="es_CL"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="{prefix}assets/site.css?v={site_version}"><script src="{prefix}assets/site.js?v={script_version}" defer></script></head>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{escape(title)} | NIAR</title><meta name="description" content="{escape(description, quote=True)}"><meta name="theme-color" content="#060a13"><meta property="og:title" content="{escape(title, quote=True)} | NIAR"><meta property="og:description" content="{escape(description, quote=True)}"><meta property="og:type" content="website"><meta property="og:locale" content="es_CL"><link rel="icon" href="{prefix}assets/favicon.svg?v={favicon_version}" type="image/svg+xml"><link rel="stylesheet" href="{prefix}assets/site.css?v={site_version}"><script src="{prefix}assets/site.js?v={script_version}" defer></script></head>
 <body id="top"{body_class}><a class="skip" href="#main">Saltar al contenido</a><header class="header"><div class="container header-inner"><a class="brand" href="{prefix}" aria-label="NIAR, inicio">niar<span class="brand-dot"></span></a><button class="menu-toggle" aria-controls="navigation" aria-expanded="false">Menú</button><nav class="nav" id="navigation" aria-label="Navegación principal">{nav}</nav></div></header><main id="main">{body}</main><footer class="footer"><div class="container footer-inner"><span>© 2026 Nicolás Araya · Santiago, Chile</span><div class="footer-links"><a href="{GITHUB}" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="{prefix}contacto/">Contacto</a><a class="back-top" href="#top">Volver arriba ↑</a></div></div></footer></body></html>'''.replace('</head>', extra_head + '</head>').replace('content="#f6f5f0"', 'content="#060a13"' if active == 'inicio' else 'content="#f6f5f0"')
 
 def project_cards(projects):
@@ -70,14 +71,20 @@ def project_cards(projects):
         cover = artwork(kind)
         if 'image' in info:
             filename, alt, caption = info['image']
-            proof_image = f'<figure class="project-evidence"><a href="/assets/projects/{filename}" target="_blank" rel="noopener noreferrer" aria-label="Ampliar captura de {escape(name, quote=True)}"><img src="/assets/projects/{filename}" alt="{escape(alt, quote=True)}" loading="lazy" decoding="async"></a><figcaption>{escape(caption)}</figcaption></figure>'
+            proof_image = f'<figure class="project-evidence"><a href="/assets/projects/{filename}" target="_blank" rel="noopener noreferrer" aria-label="Ampliar imagen de {escape(name, quote=True)}"><img src="/assets/projects/{filename}" alt="{escape(alt, quote=True)}" loading="lazy" decoding="async"></a><figcaption>{escape(caption)}</figcaption></figure>'
             cover = f'<img class="project-cover" src="/assets/projects/{filename}" alt="{escape(alt, quote=True)}" loading="lazy" decoding="async">'
         if 'gallery' in info:
             cover_file, cover_alt, _ = info['gallery'][0]
             cover = f'<img class="project-cover" src="/assets/projects/{cover_file}" alt="{escape(cover_alt, quote=True)}" loading="lazy" decoding="async">'
-            proof_image = f'<p class="gallery-intro">Fotografías del proyecto · {len(info["gallery"])} imágenes. Selecciona una para ampliarla.</p>' + evidence_gallery(name, info['gallery'])
+            gallery_label = info.get("gallery_label", f'Fotografías del proyecto · {len(info["gallery"])} imágenes. Selecciona una para ampliarla.')
+            proof_image = f'<p class="gallery-intro">{escape(gallery_label)}</p>' + evidence_gallery(name, info['gallery'])
+        cover_note = ''
+        if 'cover_image' in info:
+            cover_file, cover_alt, cover_caption = info['cover_image']
+            cover = f'<img class="project-cover" src="/assets/projects/{cover_file}" alt="{escape(cover_alt, quote=True)}" loading="lazy" decoding="async">'
+            cover_note = f'<p class="project-cover-note">{escape(cover_caption)}</p>'
         link = (f'<a class="project-link" href="{url}">Probar experiencia →</a>' if url.startswith('/') else f'<a class="project-link" href="{url}" target="_blank" rel="noopener noreferrer">Ver repositorio ↗</a>') if url else ''
-        html += f'''<article class="project" id="{project_ids[name]}"><div class="project-visual" data-style="{kind}">{cover}</div><p class="project-meta">{category}</p><h3>{name}</h3><span class="project-state">{info['status']}</span><p>{short}</p><div class="tags">{''.join(f'<span class="tag">{t}</span>' for t in tags)}</div><details><summary>Ver detalles</summary><dl class="project-facts">{description}</dl>{proof_image}<div class="evidence-links">{proof_links}</div></details>{link}</article>'''
+        html += f'''<article class="project" id="{project_ids[name]}"><div class="project-visual" data-style="{kind}">{cover}</div>{cover_note}<p class="project-meta">{category}</p><h3>{name}</h3><span class="project-state">{info['status']}</span><p>{short}</p><div class="tags">{''.join(f'<span class="tag">{t}</span>' for t in tags)}</div><details><summary>Ver detalles</summary><dl class="project-facts">{description}</dl>{proof_image}<div class="evidence-links">{proof_links}</div></details>{link}</article>'''
     return html
 
 def experience():

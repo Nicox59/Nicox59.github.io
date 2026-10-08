@@ -26,6 +26,7 @@ PROJECT_DETAILS = {
         'scope': 'Ejemplo de uso: «Inspecciona la pieza abierta en Inventor y expórtala a STL». La integración permite consultar cuerpos y operaciones y exportar el archivo desde el documento.',
         'evidence': 'Herramientas, instrucciones de instalación y ejemplos de uso de las cuatro integraciones locales.',
         'links': [],
+        'cover_image': ('mcp-concepto-ia.png', 'Ilustración conceptual de un asistente conectado a cuatro herramientas de ingeniería y desarrollo 3D.', 'Ilustración conceptual generada con IA.'),
     },
     'DJI: visión y telemetría': {
         'purpose': 'Relacionar lo que muestra el video con detecciones de objetos y telemetría para observar y registrar el entorno del dron.',
@@ -59,8 +60,11 @@ PROJECT_DETAILS = {
         'contribution': 'Desarrollé OCR local con ML Kit, acceso BAC e intento PACE cuando el chip lo anuncia, lectura de datos y foto con JMRTD y comprobaciones de hashes y firma interna. Los datos se procesan en memoria.',
         'status': 'Prototipo técnico',
         'scope': 'Requiere Android con NFC y un documento compatible. Compara los datos con EF.SOD; todavía falta validar la cadena de confianza del emisor y completar pruebas entre versiones de cédula. No equivale a identidad verificada.',
-        'evidence': 'Repositorio con el alcance, requisitos y límites de las comprobaciones implementadas.',
+        'evidence': 'Vista ilustrativa del menú basada en los textos, colores y distribución del prototipo Android, con campos vacíos. No es una captura de un dispositivo ni una prueba de lectura de un documento.',
         'links': [],
+        'cover_image': ('nfc-concepto-ia.png', 'Ilustración conceptual de un teléfono Android leyendo una tarjeta mediante NFC.', 'Ilustración conceptual generada con IA.'),
+        'gallery_label': 'Vista del menú · Selecciona la imagen para ampliarla.',
+        'gallery': [('nfc-menu-vista-ilustrativa.jpg', 'Vista ilustrativa del menú del prototipo Acceso Cédula NFC, con campos vacíos.', 'Menú recreado a partir del diseño Android del prototipo. Sin datos personales; no es una captura de un dispositivo.')],
     },
     'Biomodelos y simuladores': {
         'purpose': 'Crear recursos físicos y modelos para educación y simulación en salud.',
