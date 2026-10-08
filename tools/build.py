@@ -1,6 +1,7 @@
 """Genera las páginas estáticas. Ejecutar desde cualquier carpeta con Python 3."""
 from pathlib import Path
 from html import escape
+from hashlib import sha256
 from sword_content import sword_story
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -43,7 +44,11 @@ def shell(title, body, active='', depth=0, description=BIO):
     prefix = '../' if depth else './'
     links = [('Inicio', prefix, 'inicio'), ('Proyectos', prefix+'proyectos/', 'proyectos'), ('Laboratorio', prefix+'dedos-interactivos/', 'laboratorio'), ('Trayectoria', prefix+'cv/', 'cv'), ('Contacto', prefix+'contacto/', 'contacto')]
     nav = ''.join(f'<a href="{url}"'+(' aria-current="page"' if active==key else '')+(' class="nav-contact"' if key=='contacto' else '')+f'>{label}</a>' for label,url,key in links)
-    extra_head = '<link rel="stylesheet" href="./assets/travelling.css"><script type="module" src="./assets/travelling/travelling.js"></script>' if active == 'inicio' else ''
+    extra_head = ''
+    if active == 'inicio':
+        css_version = sha256((ROOT / 'assets/travelling.css').read_bytes().replace(b'\r\n', b'\n')).hexdigest()[:12]
+        js_version = sha256((ROOT / 'assets/travelling/travelling.js').read_bytes().replace(b'\r\n', b'\n')).hexdigest()[:12]
+        extra_head = f'<link rel="stylesheet" href="./assets/travelling.css?v={css_version}"><script type="module" src="./assets/travelling/travelling.js?v={js_version}"></script>'
     body_class = ' class="sword-home"' if active == 'inicio' else ''
     return f'''<!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{escape(title)} | NIAR</title><meta name="description" content="{escape(description, quote=True)}"><meta name="theme-color" content="#f6f5f0"><meta property="og:title" content="{escape(title, quote=True)} | NIAR"><meta property="og:description" content="{escape(description, quote=True)}"><meta property="og:type" content="website"><meta property="og:locale" content="es_CL"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="{prefix}assets/site.css"><script src="{prefix}assets/site.js" defer></script></head>

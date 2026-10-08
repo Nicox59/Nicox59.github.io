@@ -10,6 +10,7 @@ const auraButton = document.querySelector('.aura-toggle');
 const liteButton = document.querySelector('.lite-toggle');
 const progressBar = document.querySelector('.journey-progress span');
 const chapterNav = [...document.querySelectorAll('.journey-nav a')];
+const chapterSections = [...document.querySelectorAll('.journey-content [data-chapter]')];
 const motion = matchMedia('(prefers-reduced-motion: reduce)');
 const mobile = matchMedia('(max-width: 700px)');
 const assetRoot = new URL(/* @vite-ignore */ '../sword/', import.meta.url);
@@ -31,10 +32,14 @@ const textureLoader = new THREE.TextureLoader();
 const lookTarget = new THREE.Vector3();
 
 function readProgress() {
-  const rect = journey.getBoundingClientRect();
-  const total = Math.max(1, rect.height - viewportHeight);
-  const progress = THREE.MathUtils.clamp(-rect.top / total,0,1);
-  targetProgress = progress * 10;
+  // Follow the real chapter positions, including wrapped text on short screens.
+  const position = -chapterSections[0].getBoundingClientRect().top;
+  let chapter = 0;
+  while(chapter < chapterSections.length-1 && position >= chapterSections[chapter+1].offsetTop)chapter++;
+  const start = chapterSections[chapter].offsetTop;
+  const end = chapterSections[chapter+1]?.offsetTop ?? start+viewportHeight;
+  targetProgress = Math.min(10,chapter+THREE.MathUtils.clamp((position-start)/Math.max(1,end-start),0,1));
+  const progress = targetProgress/10;
   progressBar.style.width = `${progress*100}%`;
   const active = Math.min(9, Math.max(0, Math.round(targetProgress)));
   if (currentChapter !== active) {
@@ -270,11 +275,16 @@ function renderFrame(dt) {
   const position=THREE.MathUtils.clamp(p-1,0,8);
   const floor=Math.min(8,Math.floor(position));
   const focusY=THREE.MathUtils.lerp(runeY[floor],runeY[Math.min(8,floor+1)],position-floor);
-  const compact=mobile.matches && viewportHeight<600;
+  const compact=viewportWidth<=950 && viewportWidth>viewportHeight && viewportHeight<600;
   const isMobile=mobile.matches && !compact;
-  const distance=THREE.MathUtils.lerp(isMobile?34:21,isMobile?9.5:8.2,zoom);
+  // Fit the complete sword into the space above the copy in portrait layouts.
+  const overviewCopy=document.querySelector(p<5?'.intro-copy':'.journey-outro .chapter-copy');
+  const overviewSpace=Math.max(120,overviewCopy.offsetTop-82);
+  const overviewDistance=isMobile?12.4*viewportHeight/(2*Math.tan(THREE.MathUtils.degToRad(19))*overviewSpace):21;
+  const overviewY=isMobile?.15+(72+overviewSpace/2-viewportHeight/2)*12.4/overviewSpace:0;
+  const distance=THREE.MathUtils.lerp(overviewDistance,isMobile?9.5:8.2,zoom);
   const x=THREE.MathUtils.lerp(isMobile?-.9:-3.45,isMobile?-.45:compact?-1.5:-2.6,zoom);
-  const y=THREE.MathUtils.lerp(isMobile?-5.0:0,focusY-(isMobile?1.9:0),zoom);
+  const y=THREE.MathUtils.lerp(overviewY,focusY-(isMobile?1.9:0),zoom);
   const angle=THREE.MathUtils.lerp(-.26,Math.sin(p*.68)*.095,zoom);
   sword.rotation.set(0,angle,THREE.MathUtils.lerp(-.055,0,zoom));
   camera.position.set(x,y,distance);
@@ -337,6 +347,7 @@ if(journey){
   resize();updateMode();
   addEventListener('scroll',()=>{readProgress();schedule();},{passive:true});
   new ResizeObserver(()=>{resize();schedule();}).observe(stage);
+  new ResizeObserver(()=>{readProgress();schedule();}).observe(document.querySelector('.journey-content'));
   new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;visible?schedule():stop();},{threshold:0}).observe(journey);
   document.addEventListener('visibilitychange',()=>{document.hidden?stop():schedule();});
   motion.addEventListener('change',()=>{lite=motion.matches;updateMode();});
