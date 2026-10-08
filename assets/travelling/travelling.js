@@ -13657,9 +13657,9 @@ async function rd() {
 				e.isMesh && (e.material.envMapIntensity = .55, e.material.roughness = .52, e.material.metalness = .68, e.material.normalScale?.set(.4, .4), e.material.specularColor?.set(16777215), "specularIntensity" in e.material && (e.material.specularIntensity = .4));
 			}), Nu.add(n.scene), ju.add(Nu);
 			let r = await Zu.loadAsync(new URL("reference.png", Eu).href);
-			td(n.scene, r), nd(), Wu = Gu, gu.classList.add("is-ready"), vu.textContent = "Recorrido 3D", _u.dataset.ready = "true", cd(), id(0), od();
+			td(n.scene, r), nd(), Wu = Gu, id(0), gu.classList.add("is-ready"), _u.dataset.ready = "true", cd(), od();
 		} catch (e) {
-			console.error("No se pudo iniciar el recorrido 3D:", e), Uu = !0, Vu = !0, ld(), gu.classList.remove("is-ready"), gu.classList.add("is-lite"), vu.textContent = "Vista ligera · 3D no disponible", bu.textContent = "Vista ligera", bu.setAttribute("aria-pressed", "true"), bu.disabled = !0, yu.disabled = !0;
+			console.error("No se pudo iniciar el recorrido 3D:", e), Uu = !0, Vu = !0, ld(), gu.classList.remove("is-ready", "is-loading"), gu.classList.add("is-lite"), vu.textContent = "Vista ligera · 3D no disponible", bu.textContent = "Vista ligera", bu.setAttribute("aria-pressed", "true"), bu.disabled = !0, yu.disabled = !0;
 		}
 	})()), Ru;
 }
@@ -13690,7 +13690,7 @@ function sd() {
 	cancelAnimationFrame(Lu), Lu = 0, Ku = 0;
 }
 function cd() {
-	gu.classList.toggle("is-lite", Vu), bu.setAttribute("aria-pressed", String(Vu)), bu.textContent = Vu ? "Activar 3D" : "Vista ligera", yu.disabled = Vu || Uu, Vu ? (sd(), vu.textContent = wu.matches ? "Vista ligera · movimiento reducido" : "Vista ligera") : Uu || (vu.textContent = Nu ? "Recorrido 3D" : "Cargando espada 3D…", rd(), od());
+	gu.classList.toggle("is-lite", Vu), gu.classList.toggle("is-loading", !Vu && !gu.classList.contains("is-ready") && !Uu), bu.setAttribute("aria-pressed", String(Vu)), bu.textContent = Vu ? "Activar 3D" : "Vista ligera", yu.disabled = Vu || Uu, Vu ? (sd(), vu.textContent = wu.matches ? "Vista ligera · movimiento reducido" : "Vista ligera") : Uu || (vu.textContent = gu.classList.contains("is-ready") ? "Recorrido 3D" : "Cargando espada 3D…", rd(), od());
 }
 function ld() {
 	sd();
@@ -13723,7 +13723,7 @@ hu && (ed(), cd(), addEventListener("scroll", () => {
 }), bu.addEventListener("click", () => {
 	Vu = !Vu, cd();
 }), _u.addEventListener("webglcontextlost", (e) => {
-	e.preventDefault(), Uu = !0, Vu = !0, sd(), gu.classList.add("is-lite"), vu.textContent = "Vista ligera · conexión 3D interrumpida", bu.textContent = "Vista ligera", bu.setAttribute("aria-pressed", "true"), bu.disabled = !0, yu.disabled = !0;
+	e.preventDefault(), Uu = !0, Vu = !0, sd(), gu.classList.remove("is-ready", "is-loading"), gu.classList.add("is-lite"), vu.textContent = "Vista ligera · conexión 3D interrumpida", bu.textContent = "Vista ligera", bu.setAttribute("aria-pressed", "true"), bu.disabled = !0, yu.disabled = !0;
 }), addEventListener("pagehide", () => {
 	zu = !1, sd();
 }), addEventListener("pageshow", () => {

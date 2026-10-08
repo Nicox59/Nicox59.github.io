@@ -248,15 +248,15 @@ async function initialize() {
       const inlayTexture=await textureLoader.loadAsync(new URL('reference.png',assetRoot).href);
       makeBlade(gltf.scene,inlayTexture);makeFlames();
       smoothProgress=targetProgress;
+      renderFrame(0);
       stage.classList.add('is-ready');
-      status.textContent='Recorrido 3D';
       canvas.dataset.ready='true';
-      updateMode();renderFrame(0);schedule();
+      updateMode();schedule();
     } catch(error) {
       console.error('No se pudo iniciar el recorrido 3D:',error);
       failed=true;lite=true;
       releaseScene();
-      stage.classList.remove('is-ready');
+      stage.classList.remove('is-ready','is-loading');
       stage.classList.add('is-lite');
       status.textContent='Vista ligera · 3D no disponible';
       liteButton.textContent='Vista ligera';liteButton.setAttribute('aria-pressed','true');
@@ -320,11 +320,12 @@ function schedule(){
 function stop(){cancelAnimationFrame(animationID);animationID=0;lastTime=0;}
 function updateMode(){
   stage.classList.toggle('is-lite',lite);
+  stage.classList.toggle('is-loading',!lite && !stage.classList.contains('is-ready') && !failed);
   liteButton.setAttribute('aria-pressed',String(lite));
   liteButton.textContent=lite?'Activar 3D':'Vista ligera';
   auraButton.disabled=lite || failed;
   if(lite){stop();status.textContent=motion.matches?'Vista ligera · movimiento reducido':'Vista ligera';}
-  else if(!failed){status.textContent=sword?'Recorrido 3D':'Cargando espada 3D…';initialize();schedule();}
+  else if(!failed){status.textContent=stage.classList.contains('is-ready')?'Recorrido 3D':'Cargando espada 3D…';initialize();schedule();}
 }
 function releaseScene(){
   stop();
@@ -358,7 +359,7 @@ if(journey){
   });
   liteButton.addEventListener('click',()=>{lite=!lite;updateMode();});
   canvas.addEventListener('webglcontextlost',event=>{
-    event.preventDefault();failed=true;lite=true;stop();stage.classList.add('is-lite');
+    event.preventDefault();failed=true;lite=true;stop();stage.classList.remove('is-ready','is-loading');stage.classList.add('is-lite');
     status.textContent='Vista ligera · conexión 3D interrumpida';
     liteButton.textContent='Vista ligera';liteButton.setAttribute('aria-pressed','true');
     liteButton.disabled=true;auraButton.disabled=true;

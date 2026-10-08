@@ -45,6 +45,12 @@ El modelo original en `Downloads/Espada travelling` se conserva. La copia web en
 
 El generador añade versiones basadas en el contenido a las URLs del CSS y JavaScript del recorrido para cargar las correcciones después de publicarlas. Compilar primero el bundle y luego regenerar las páginas.
 
+Durante la carga del modelo se muestra un círculo cian con el texto «Cargando
+experiencia 3D…». La espada PNG permanece oculta y el indicador desaparece después
+del primer fotograma renderizado. La imagen se conserva para la vista ligera,
+el movimiento reducido y los errores de WebGL. Se verificaron una carga lenta y
+un fallo del modelo con un servidor local de prueba, además de la vista móvil.
+
 Three.js se incluye en el bundle local, sin CDN. Su licencia MIT se conserva en `assets/travelling/THREE-LICENSE.txt`. Revisar el recorrido en escritorio y móvil después de cambiar el modelo o las posiciones de las runas; el rendimiento en teléfonos físicos depende del equipo y aún requiere una prueba real.
 
 Editar `tools/build.py` y ejecutar `python tools/build.py`. El generador actualiza `index.html`, `proyectos/index.html`, `cv/index.html`, `contacto/index.html` y `404.html`. Los archivos HTML generados deben incluirse al publicar cambios.
