@@ -13481,11 +13481,11 @@ function mu(e) {
 }
 //#endregion
 //#region src/main.js
-var hu = document.querySelector(".sword-journey"), gu = document.querySelector(".sword-stage"), _u = document.querySelector("#sword-canvas"), vu = document.querySelector(".journey-status"), yu = document.querySelector(".aura-toggle"), bu = document.querySelector(".lite-toggle"), xu = document.querySelector(".journey-progress span"), Su = [...document.querySelectorAll(".journey-nav a")], Cu = [...document.querySelectorAll(".journey-content [data-chapter]")], wu = matchMedia("(prefers-reduced-motion: reduce)"), Tu = matchMedia("(max-width: 700px)"), Eu = new URL(
+var hu = document.querySelector(".sword-journey"), gu = document.querySelector(".sword-stage"), _u = document.querySelector("#sword-canvas"), vu = document.querySelector(".journey-status"), yu = document.querySelector(".aura-toggle"), bu = document.querySelector(".lite-toggle"), xu = document.querySelector(".journey-progress span"), Su = [...hu.querySelectorAll(".journey-nav a, .journey-chapters nav a")], Cu = hu.querySelector(".journey-sections"), wu = [...document.querySelectorAll(".journey-content [data-chapter]")], Tu = matchMedia("(prefers-reduced-motion: reduce)"), Eu = matchMedia("(max-width: 700px)"), Du = new URL(
 	/* @vite-ignore */
 	"../sword/",
 	import.meta.url
-), Du = [
+), Ou = [
 	2.154,
 	1.487,
 	.791,
@@ -13495,7 +13495,7 @@ var hu = document.querySelector(".sword-journey"), gu = document.querySelector("
 	-2.209,
 	-2.941,
 	-3.863
-], Ou = [
+], ku = [
 	[
 		14,
 		18,
@@ -13550,35 +13550,41 @@ var hu = document.querySelector(".sword-journey"), gu = document.querySelector("
 		61,
 		555
 	]
-].map(([e, t, n, r]) => new Ze(e / 69, t / 587, n / 69, r / 587)), ku = {
+].map(([e, t, n, r]) => new Ze(e / 69, t / 587, n / 69, r / 587)), Au = {
 	inlayReference: { value: null },
 	runeProgress: { value: 0 },
-	runeCenters: { value: new Float32Array(Du) },
-	runeIconBounds: { value: Ou }
-}, Au, ju, Mu, Nu, Pu, Fu, Iu, Lu = 0, Ru, zu = !0, Bu = !1, Vu = wu.matches, Hu = !0, Uu = !1, Wu = 0, Gu = 0, Ku = 0, qu = 0, Ju = -1, Yu = 0, Xu = 0, Zu = new ia(), Qu = new G();
-function $u() {
-	let e = -Cu[0].getBoundingClientRect().top, t = 0;
-	for (; t < Cu.length - 1 && e >= Cu[t + 1].offsetTop;) t++;
-	let n = Cu[t].offsetTop, r = Cu[t + 1]?.offsetTop ?? n + Xu;
-	Gu = Math.min(10, t + H.clamp((e - n) / Math.max(1, r - n), 0, 1));
-	let i = Gu / 10;
-	xu.style.width = `${i * 100}%`;
-	let a = Math.min(9, Math.max(0, Math.round(Gu)));
-	Ju !== a && (Ju = a, Su.forEach((e, t) => {
-		t === a ? e.setAttribute("aria-current", "true") : e.removeAttribute("aria-current");
-	}));
-}
+	runeCenters: { value: new Float32Array(Ou) },
+	runeIconBounds: { value: ku }
+}, ju, Mu, Nu, Pu, Fu, Iu, Lu, Ru = 0, zu, Bu = !0, Vu = !1, Hu = !1, Uu = !0, Wu = !1, Gu = 0, Ku = 0, qu = 0, Ju = 0, Yu = -1, Xu = 0, Zu = 0, Qu = new ia(), $u = new G();
 function ed() {
-	Yu = gu.clientWidth, Xu = gu.clientHeight, Au && (Au.setPixelRatio(Math.min(devicePixelRatio, Tu.matches ? 1.35 : 1.75)), Au.setSize(Yu, Xu, !1), Mu.aspect = Yu / Xu, Mu.updateProjectionMatrix()), $u();
+	if (Ku = 0, !Cu.hidden) {
+		let e = -wu[0].getBoundingClientRect().top, t = 0;
+		for (; t < wu.length - 1 && e >= wu[t + 1].offsetTop;) t++;
+		let n = wu[t].offsetTop, r = wu[t + 1]?.offsetTop ?? n + Zu;
+		Ku = Math.min(10, t + H.clamp((e - n) / Math.max(1, r - n), 0, 1));
+	}
+	let e = Ku / 10;
+	xu.style.width = `${e * 100}%`;
+	let t = Math.min(9, Math.max(0, Math.round(Ku)));
+	if (Yu !== t) {
+		Yu = t;
+		let e = t === 0 ? "#recorrido" : `#tecnologia-${t}`;
+		Su.forEach((t) => {
+			t.hash === e ? t.setAttribute("aria-current", "location") : t.removeAttribute("aria-current");
+		});
+	}
 }
-function td(e, t) {
-	t.colorSpace = j, t.anisotropy = Math.min(8, Au.capabilities.getMaxAnisotropy()), ku.inlayReference.value = t, e.traverse((e) => {
+function td() {
+	Xu = gu.clientWidth, Zu = gu.clientHeight, ju && (ju.setPixelRatio(Math.min(devicePixelRatio, Eu.matches ? 1.35 : 1.75)), ju.setSize(Xu, Zu, !1), Nu.aspect = Xu / Zu, Nu.updateProjectionMatrix()), ed();
+}
+function nd(e, t) {
+	t.colorSpace = j, t.anisotropy = Math.min(8, ju.capabilities.getMaxAnisotropy()), Au.inlayReference.value = t, e.traverse((e) => {
 		e.isMesh && (e.material.onBeforeCompile = (e) => {
-			Object.assign(e.uniforms, ku), e.vertexShader = e.vertexShader.replace("#include <common>", "#include <common>\nvarying vec3 vRunePosition;").replace("#include <begin_vertex>", "#include <begin_vertex>\nvRunePosition=position;"), e.fragmentShader = e.fragmentShader.replace("#include <common>", "#include <common>\n          varying vec3 vRunePosition;\n          uniform sampler2D inlayReference;\n          uniform float runeProgress;\n          uniform float runeCenters[9];\n          uniform vec4 runeIconBounds[9];\n        ").replace("#include <map_fragment>", "#include <map_fragment>\n          // Raw GLB coordinates: X spans the blade, -Z runs toward the handle.\n          float bladeY=-vRunePosition.z*10.-6.;\n          float bladeX=vRunePosition.x*10.;\n          float front=smoothstep(0.,.004,vRunePosition.y);\n          // Feather into the original dark inlay, retaining its golden side details.\n          // The lower end narrows and fades before the original tip jewel.\n          float panelWidth=.43;\n          panelWidth*=smoothstep(-4.75,-4.08,bladeY);\n          panelWidth*=1.-.48*smoothstep(2.24,2.65,bladeY);\n          float panel=(1.-smoothstep(max(0.,panelWidth-.055),panelWidth,abs(bladeX)));\n          panel*=smoothstep(-4.75,-4.55,bladeY)*(1.-smoothstep(2.55,2.70,bladeY))*front;\n          // Match the supplied crop to its higher-resolution region in reference.png.\n          // Sample the original pixels directly; the uploaded strip stays unmodified.\n          float stripU=clamp(bladeX/max(.002,2.*panelWidth)+.5,0.,1.);\n          float stripV=clamp((2.70-bladeY)/7.45,0.,1.);\n          vec2 imageUV=vec2((404.+stripU*125.)/941.,1.-(434.+stripV*1063.)/1672.);\n          vec3 inlayColor=texture2D(inlayReference,imageUV).rgb;\n          int runeSlot=0;\n          float nearest=abs(bladeY-runeCenters[0]);\n          for(int j=1;j<9;j++){\n            float distanceToRune=abs(bladeY-runeCenters[j]);\n            if(distanceToRune<nearest){nearest=distanceToRune;runeSlot=j;}\n          }\n          float slot=float(runeSlot);\n          float runeHighlight=max(0.,1.-abs(runeProgress-(slot+1.)));\n          vec4 iconBox=runeIconBounds[runeSlot];\n          float iconRegion=smoothstep(iconBox.x,iconBox.x+.014,stripU)*(1.-smoothstep(iconBox.z-.014,iconBox.z,stripU));\n          iconRegion*=smoothstep(iconBox.y,iconBox.y+.002,stripV)*(1.-smoothstep(iconBox.w-.002,iconBox.w,stripV));\n          float cyanInk=smoothstep(.025,.10,inlayColor.b-max(inlayColor.r,inlayColor.g*.65));\n          cyanInk*=smoothstep(.16,.42,inlayColor.b);\n          float iconLightMask=iconRegion*cyanInk;\n          // The overview shows every rune; each chapter then reveals its rune\n          // cumulatively. Using scroll progress also reverses this on the way up.\n          float overviewVisible=1.-smoothstep(.35,.90,runeProgress);\n          float chapterVisible=smoothstep(slot+.65,slot+1.,runeProgress);\n          float runeVisible=max(overviewVisible,chapterVisible);\n          // Clear the stroke cores AND their dark halo inside the icon region.\n          // Preserve any warm gold pixels; the side rails are outside the box.\n          float goldInk=smoothstep(.04,.12,inlayColor.r-inlayColor.b)*smoothstep(.08,.20,inlayColor.r);\n          float hiddenIcon=iconRegion*(1.-goldInk)*(1.-runeVisible);\n          vec3 visibleInlay=mix(inlayColor,vec3(.001,.005,.012),hiddenIcon);\n          diffuseColor.rgb=mix(diffuseColor.rgb,visibleInlay*.65,panel);\n          diffuseColor.rgb=mix(diffuseColor.rgb,visibleInlay*(.20+runeHighlight*.40),panel*iconLightMask*runeVisible);\n        ").replace("#include <metalnessmap_fragment>", "#include <metalnessmap_fragment>\n          metalnessFactor=mix(metalnessFactor,0.,panel);\n        ").replace("#include <roughnessmap_fragment>", "#include <roughnessmap_fragment>\n          roughnessFactor=mix(roughnessFactor,.9,panel);\n        ").replace("#include <normal_fragment_maps>", "#include <normal_fragment_maps>\n          normal=normalize(mix(normal,nonPerturbedNormal,panel*hiddenIcon));\n        ").replace("#include <emissivemap_fragment>", "#include <emissivemap_fragment>\n          // Decoration stays constant while revealed icons light up in turn.\n          totalEmissiveRadiance+=visibleInlay*panel*(.90-iconLightMask*.60*runeVisible);\n          totalEmissiveRadiance+=inlayColor*panel*iconLightMask*runeVisible*runeHighlight*1.4;\n        ");
+			Object.assign(e.uniforms, Au), e.vertexShader = e.vertexShader.replace("#include <common>", "#include <common>\nvarying vec3 vRunePosition;").replace("#include <begin_vertex>", "#include <begin_vertex>\nvRunePosition=position;"), e.fragmentShader = e.fragmentShader.replace("#include <common>", "#include <common>\n          varying vec3 vRunePosition;\n          uniform sampler2D inlayReference;\n          uniform float runeProgress;\n          uniform float runeCenters[9];\n          uniform vec4 runeIconBounds[9];\n        ").replace("#include <map_fragment>", "#include <map_fragment>\n          // Raw GLB coordinates: X spans the blade, -Z runs toward the handle.\n          float bladeY=-vRunePosition.z*10.-6.;\n          float bladeX=vRunePosition.x*10.;\n          float front=smoothstep(0.,.004,vRunePosition.y);\n          // Feather into the original dark inlay, retaining its golden side details.\n          // The lower end narrows and fades before the original tip jewel.\n          float panelWidth=.43;\n          panelWidth*=smoothstep(-4.75,-4.08,bladeY);\n          panelWidth*=1.-.48*smoothstep(2.24,2.65,bladeY);\n          float panel=(1.-smoothstep(max(0.,panelWidth-.055),panelWidth,abs(bladeX)));\n          panel*=smoothstep(-4.75,-4.55,bladeY)*(1.-smoothstep(2.55,2.70,bladeY))*front;\n          // Match the supplied crop to its higher-resolution region in reference.png.\n          // Sample the original pixels directly; the uploaded strip stays unmodified.\n          float stripU=clamp(bladeX/max(.002,2.*panelWidth)+.5,0.,1.);\n          float stripV=clamp((2.70-bladeY)/7.45,0.,1.);\n          vec2 imageUV=vec2((404.+stripU*125.)/941.,1.-(434.+stripV*1063.)/1672.);\n          vec3 inlayColor=texture2D(inlayReference,imageUV).rgb;\n          int runeSlot=0;\n          float nearest=abs(bladeY-runeCenters[0]);\n          for(int j=1;j<9;j++){\n            float distanceToRune=abs(bladeY-runeCenters[j]);\n            if(distanceToRune<nearest){nearest=distanceToRune;runeSlot=j;}\n          }\n          float slot=float(runeSlot);\n          float runeHighlight=max(0.,1.-abs(runeProgress-(slot+1.)));\n          vec4 iconBox=runeIconBounds[runeSlot];\n          float iconRegion=smoothstep(iconBox.x,iconBox.x+.014,stripU)*(1.-smoothstep(iconBox.z-.014,iconBox.z,stripU));\n          iconRegion*=smoothstep(iconBox.y,iconBox.y+.002,stripV)*(1.-smoothstep(iconBox.w-.002,iconBox.w,stripV));\n          float cyanInk=smoothstep(.025,.10,inlayColor.b-max(inlayColor.r,inlayColor.g*.65));\n          cyanInk*=smoothstep(.16,.42,inlayColor.b);\n          float iconLightMask=iconRegion*cyanInk;\n          // The overview shows every rune; each chapter then reveals its rune\n          // cumulatively. Using scroll progress also reverses this on the way up.\n          float overviewVisible=1.-smoothstep(.35,.90,runeProgress);\n          float chapterVisible=smoothstep(slot+.65,slot+1.,runeProgress);\n          float runeVisible=max(overviewVisible,chapterVisible);\n          // Clear the stroke cores AND their dark halo inside the icon region.\n          // Preserve any warm gold pixels; the side rails are outside the box.\n          float goldInk=smoothstep(.04,.12,inlayColor.r-inlayColor.b)*smoothstep(.08,.20,inlayColor.r);\n          float hiddenIcon=iconRegion*(1.-goldInk)*(1.-runeVisible);\n          vec3 visibleInlay=mix(inlayColor,vec3(.001,.005,.012),hiddenIcon);\n          diffuseColor.rgb=mix(diffuseColor.rgb,visibleInlay*.65,panel);\n          diffuseColor.rgb=mix(diffuseColor.rgb,visibleInlay*(.20+runeHighlight*.40),panel*iconLightMask*runeVisible);\n        ").replace("#include <metalnessmap_fragment>", "#include <metalnessmap_fragment>\n          metalnessFactor=mix(metalnessFactor,0.,panel);\n        ").replace("#include <roughnessmap_fragment>", "#include <roughnessmap_fragment>\n          roughnessFactor=mix(roughnessFactor,.9,panel);\n        ").replace("#include <normal_fragment_maps>", "#include <normal_fragment_maps>\n          normal=normalize(mix(normal,nonPerturbedNormal,panel*hiddenIcon));\n        ").replace("#include <emissivemap_fragment>", "#include <emissivemap_fragment>\n          // Decoration stays constant while revealed icons light up in turn.\n          totalEmissiveRadiance+=visibleInlay*panel*(.90-iconLightMask*.60*runeVisible);\n          totalEmissiveRadiance+=inlayColor*panel*iconLightMask*runeVisible*runeHighlight*1.4;\n        ");
 		}, e.material.customProgramCacheKey = () => "niar-surface-runes-v3-cumulative", e.material.needsUpdate = !0);
 	});
 }
-function nd() {
+function rd() {
 	let e = {
 		time: { value: 0 },
 		strength: { value: 1 }
@@ -13591,7 +13597,7 @@ function nd() {
 		vertexShader: "\n      varying vec2 vUv;\n      void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}\n    ",
 		fragmentShader: "\n      varying vec2 vUv;\n      uniform float time;\n      uniform float strength;\n      float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}\n      float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}\n      void main(){\n        float y=vUv.y;\n        float turbulence=noise(vec2(y*29.0-time*1.65,vUv.x*5.0-time*.4));\n        turbulence+=.45*noise(vec2(y*63.0-time*3.2,vUv.x*9.));\n        float tongue=.12+.45*pow(turbulence*.7,2.0);\n        float flame=1.-smoothstep(tongue*.18,tongue,vUv.x);\n        flame*=smoothstep(0.,.035,y)*smoothstep(1.,.91,y);\n        float core=1.-smoothstep(.015,.12,vUv.x);\n        vec3 color=mix(vec3(.02,.18,.9),vec3(.12,.74,1.),flame);\n        color=mix(color,vec3(.60,.94,1.),core);\n        gl_FragColor=vec4(color,flame*(.50+.18*sin(y*44.-time*5.))*strength);\n      }\n    "
 	});
-	Pu = new kt(), Pu.userData.uniforms = e;
+	Fu = new kt(), Fu.userData.uniforms = e;
 	let n = 8.5, r = -5.7;
 	for (let e of [-1, 1]) {
 		let i = new ci(.96, n, 1, 90), a = i.attributes.position, o = i.attributes.uv;
@@ -13599,32 +13605,32 @@ function nd() {
 			let i = a.getY(t) + r + n / 2, s = i < -4.1 ? Math.max(.025, .65 * ((i - r) / 1.6)) : .65, c = o.getX(t) * .96;
 			a.setXYZ(t, e * (s + c), i, .07);
 		}
-		i.computeVertexNormals(), Pu.add(new ar(i, t));
+		i.computeVertexNormals(), Fu.add(new ar(i, t));
 	}
-	Nu.add(Pu);
-	let i = Tu.matches ? 55 : 100, a = new Float32Array(i * 3);
+	Pu.add(Fu);
+	let i = Eu.matches ? 55 : 100, a = new Float32Array(i * 3);
 	for (let e = 0; e < i; e++) a[e * 3] = (Math.random() < .5 ? -1 : 1) * (.65 + Math.random() * 1.1), a[e * 3 + 1] = -5.5 + Math.random() * 8.5, a[e * 3 + 2] = .08 + Math.random() * .55;
 	let o = new Mn();
-	o.setAttribute("position", new _n(a, 3)), Fu = new ti(o, new Xr({
+	o.setAttribute("position", new _n(a, 3)), Iu = new ti(o, new Xr({
 		color: 7069695,
 		size: .023,
 		transparent: !0,
 		opacity: .75,
 		depthWrite: !1,
 		blending: 2
-	})), Nu.add(Fu);
+	})), Pu.add(Iu);
 }
-async function rd() {
-	return Au || Ru || Uu || (vu.textContent = "Cargando espada 3D…", Ru = (async () => {
+async function id() {
+	return ju || zu || Wu || (vu.textContent = "Cargando espada 3D…", zu = (async () => {
 		try {
-			Au = new ul({
+			ju = new ul({
 				canvas: _u,
 				antialias: !0,
 				alpha: !0,
 				powerPreference: "high-performance"
-			}), Au.setClearColor(0, 0), Au.outputColorSpace = j, Au.toneMapping = 4, Au.toneMappingExposure = .95, ju = new Lt(), Mu = new va(38, 1, .05, 100), ju.add(new oa(11852799, 1581360, .8));
-			let e = new _o(Au), t = new pu();
-			Iu = e.fromScene(t, .04), ju.environment = Iu.texture, t.dispose(), e.dispose();
+			}), ju.setClearColor(0, 0), ju.outputColorSpace = j, ju.toneMapping = 4, ju.toneMappingExposure = .95, Mu = new Lt(), Nu = new va(38, 1, .05, 100), Mu.add(new oa(11852799, 1581360, .8));
+			let e = new _o(ju), t = new pu();
+			Lu = e.fromScene(t, .04), Mu.environment = Lu.texture, t.dispose(), e.dispose();
 			for (let [e, t, n, r, i] of [
 				[
 					14349311,
@@ -13649,84 +13655,86 @@ async function rd() {
 				]
 			]) {
 				let a = new Ta(e, t);
-				a.position.set(n, r, i), ju.add(a);
+				a.position.set(n, r, i), Mu.add(a);
 			}
-			ed();
-			let n = await new ml().loadAsync(new URL("sword.glb", Eu).href);
-			Nu = new kt(), n.scene.scale.setScalar(10), n.scene.position.y = -6, n.scene.traverse((e) => {
+			td();
+			let n = await new ml().loadAsync(new URL("sword.glb", Du).href);
+			Pu = new kt(), n.scene.scale.setScalar(10), n.scene.position.y = -6, n.scene.traverse((e) => {
 				e.isMesh && (e.material.envMapIntensity = .55, e.material.roughness = .52, e.material.metalness = .68, e.material.normalScale?.set(.4, .4), e.material.specularColor?.set(16777215), "specularIntensity" in e.material && (e.material.specularIntensity = .4));
-			}), Nu.add(n.scene), ju.add(Nu);
-			let r = await Zu.loadAsync(new URL("reference.png", Eu).href);
-			td(n.scene, r), nd(), Wu = Gu, id(0), gu.classList.add("is-ready"), _u.dataset.ready = "true", cd(), od();
+			}), Pu.add(n.scene), Mu.add(Pu);
+			let r = await Qu.loadAsync(new URL("reference.png", Du).href);
+			nd(n.scene, r), rd(), Gu = Ku, ad(0), gu.classList.add("is-ready"), _u.dataset.ready = "true", ld(), sd();
 		} catch (e) {
-			console.error("No se pudo iniciar el recorrido 3D:", e), Uu = !0, Vu = !0, ld(), gu.classList.remove("is-ready", "is-loading"), gu.classList.add("is-lite"), vu.textContent = "Vista ligera · 3D no disponible", bu.textContent = "Vista ligera", bu.setAttribute("aria-pressed", "true"), bu.disabled = !0, yu.disabled = !0;
+			console.error("No se pudo iniciar el recorrido 3D:", e), Wu = !0, Hu = !0, ud(), gu.classList.remove("is-ready", "is-loading"), gu.classList.add("is-lite"), vu.textContent = "Vista ligera · 3D no disponible", bu.textContent = "3D no disponible", bu.disabled = !0, yu.hidden = !0;
 		}
-	})()), Ru;
+	})()), zu;
 }
-function id(e) {
-	if (!Au || !Nu || !Pu || Uu) return;
+function ad(e) {
+	if (!ju || !Pu || !Fu || Wu) return;
 	let t = 1 - Math.exp(-e * 6);
-	Wu = e ? H.lerp(Wu, Gu, t) : Gu;
-	let n = H.clamp(Wu, 0, 10), r = H.smoothstep(n, 0, 1) * (1 - H.smoothstep(n, 9, 10)), i = H.clamp(n - 1, 0, 8), a = Math.min(8, Math.floor(i)), o = H.lerp(Du[a], Du[Math.min(8, a + 1)], i - a), s = Yu <= 950 && Yu > Xu && Xu < 600, c = Tu.matches && !s, l = document.querySelector(n < 5 ? ".intro-copy" : ".journey-outro .chapter-copy"), u = Math.max(120, l.offsetTop - 82), d = c ? 12.4 * Xu / (2 * Math.tan(H.degToRad(19)) * u) : 21, f = c ? .15 + (72 + u / 2 - Xu / 2) * 12.4 / u : 0, p = H.lerp(d, c ? 9.5 : 8.2, r), m = H.lerp(c ? -.9 : -3.45, c ? -.45 : s ? -1.5 : -2.6, r), h = H.lerp(f, o - (c ? 1.9 : 0), r), g = H.lerp(-.26, Math.sin(n * .68) * .095, r);
-	if (Nu.rotation.set(0, g, H.lerp(-.055, 0, r)), Mu.position.set(m, h, p), Qu.set(m, h, 0), Mu.lookAt(Qu), ku.runeProgress.value = n, Pu.userData.uniforms.time.value = qu, Pu.userData.uniforms.strength.value = .9 + .1 * Math.sin(qu * .9), !Bu && e) {
-		let t = Fu.geometry.attributes.position;
+	Gu = e ? H.lerp(Gu, Ku, t) : Ku;
+	let n = H.clamp(Gu, 0, 10), r = H.smoothstep(n, 0, 1) * (1 - H.smoothstep(n, 9, 10)), i = H.clamp(n - 1, 0, 8), a = Math.min(8, Math.floor(i)), o = H.lerp(Ou[a], Ou[Math.min(8, a + 1)], i - a), s = Xu <= 950 && Xu > Zu && Zu < 600, c = Eu.matches && !s, l = document.querySelector(n < 5 ? ".intro-copy" : ".journey-outro .chapter-copy"), u = Math.max(120, l.offsetTop - 82), d = c ? 12.4 * Zu / (2 * Math.tan(H.degToRad(19)) * u) : 21, f = c ? .15 + (72 + u / 2 - Zu / 2) * 12.4 / u : 0, p = H.lerp(d, c ? 9.5 : 8.2, r), m = H.lerp(c ? -.9 : -3.45, c ? -.45 : s ? -1.5 : -2.6, r), h = H.lerp(f, o - (c ? 1.9 : 0), r), g = H.lerp(-.26, Math.sin(n * .68) * .095, r);
+	if (Pu.rotation.set(0, g, H.lerp(-.055, 0, r)), Nu.position.set(m, h, p), $u.set(m, h, 0), Nu.lookAt($u), Au.runeProgress.value = n, Fu.userData.uniforms.time.value = Ju, Fu.userData.uniforms.strength.value = .9 + .1 * Math.sin(Ju * .9), !Vu && e) {
+		let t = Iu.geometry.attributes.position;
 		for (let n = 0; n < t.count; n++) {
 			let r = t.getY(n) + e * (.18 + n % 7 * .04);
 			r > 2.9 && (r = -5.5), t.setY(n, r);
 		}
 		t.needsUpdate = !0;
 	}
-	Au.render(ju, Mu);
+	ju.render(Mu, Nu);
 }
-function ad(e) {
-	if (Lu = 0, !zu || !Hu || document.hidden || Vu || Uu) return;
-	let t = Ku ? Math.min((e - Ku) / 1e3, .05) : .016;
-	Ku = e, Bu || (qu += t), id(t), (!Bu || Math.abs(Wu - Gu) > 5e-4) && od();
-}
-function od() {
-	!Lu && Au && Nu && Pu && zu && Hu && !document.hidden && !Vu && !Uu && (Lu = requestAnimationFrame(ad));
+function od(e) {
+	if (Ru = 0, !Bu || !Uu || document.hidden || Hu || Wu) return;
+	let t = qu ? Math.min((e - qu) / 1e3, .05) : .016;
+	qu = e, Vu || (Ju += t), ad(t), (!Vu || Math.abs(Gu - Ku) > 5e-4) && sd();
 }
 function sd() {
-	cancelAnimationFrame(Lu), Lu = 0, Ku = 0;
+	!Ru && ju && Pu && Fu && Bu && Uu && !document.hidden && !Hu && !Wu && (Ru = requestAnimationFrame(od));
 }
 function cd() {
-	gu.classList.toggle("is-lite", Vu), gu.classList.toggle("is-loading", !Vu && !gu.classList.contains("is-ready") && !Uu), bu.setAttribute("aria-pressed", String(Vu)), bu.textContent = Vu ? "Activar 3D" : "Vista ligera", yu.disabled = Vu || Uu, Vu ? (sd(), vu.textContent = wu.matches ? "Vista ligera · movimiento reducido" : "Vista ligera") : Uu || (vu.textContent = gu.classList.contains("is-ready") ? "Recorrido 3D" : "Cargando espada 3D…", rd(), od());
+	cancelAnimationFrame(Ru), Ru = 0, qu = 0;
 }
 function ld() {
-	sd();
+	if (Wu) return;
+	let e = gu.classList.contains("is-ready");
+	gu.classList.toggle("is-lite", Hu), gu.classList.toggle("is-loading", !Hu && !e && !Wu), bu.disabled = !Hu && !e, bu.textContent = Hu ? "Activar 3D" : e ? "Vista ligera" : "Cargando 3D…", yu.hidden = Hu || !e || Wu, Hu ? (cd(), vu.textContent = Tu.matches ? "Vista ligera · movimiento reducido" : "Vista ligera") : Wu || (vu.textContent = e ? "Recorrido 3D" : "Cargando espada 3D…", id(), sd());
+}
+function ud() {
+	cd();
 	let e = /* @__PURE__ */ new Set(), t = /* @__PURE__ */ new Set(), n = /* @__PURE__ */ new Set();
-	ku.inlayReference.value && e.add(ku.inlayReference.value), ju?.traverse((r) => {
+	Au.inlayReference.value && e.add(Au.inlayReference.value), Mu?.traverse((r) => {
 		r.geometry && t.add(r.geometry);
 		for (let t of (Array.isArray(r.material) ? r.material : [r.material]).filter(Boolean)) {
 			n.add(t);
 			for (let n of Object.values(t)) n?.isTexture && e.add(n);
 			for (let n of Object.values(t.uniforms || {})) n.value?.isTexture && e.add(n.value);
 		}
-	}), e.forEach((e) => e.dispose()), t.forEach((e) => e.dispose()), n.forEach((e) => e.dispose()), Iu?.dispose(), Au?.dispose(), Au = void 0, Nu = void 0, ju = void 0, ku.inlayReference.value = null;
+	}), e.forEach((e) => e.dispose()), t.forEach((e) => e.dispose()), n.forEach((e) => e.dispose()), Lu?.dispose(), ju?.dispose(), ju = void 0, Pu = void 0, Mu = void 0, Au.inlayReference.value = null;
 }
-hu && (ed(), cd(), addEventListener("scroll", () => {
-	$u(), od();
+hu && (td(), ld(), addEventListener("scroll", () => {
+	ed(), sd();
 }, { passive: !0 }), new ResizeObserver(() => {
-	ed(), od();
+	td(), sd();
 }).observe(gu), new ResizeObserver(() => {
-	$u(), od();
+	ed(), sd();
 }).observe(document.querySelector(".journey-content")), new IntersectionObserver((e) => {
-	Hu = e[0].isIntersecting, Hu ? od() : sd();
+	Uu = e[0].isIntersecting, Uu ? sd() : cd();
 }, { threshold: 0 }).observe(hu), document.addEventListener("visibilitychange", () => {
-	document.hidden ? sd() : od();
-}), wu.addEventListener("change", () => {
-	Vu = wu.matches, cd();
+	document.hidden ? cd() : sd();
 }), Tu.addEventListener("change", () => {
-	ed(), od();
+	Hu = Tu.matches, ld();
+}), Eu.addEventListener("change", () => {
+	td(), sd();
 }), yu.addEventListener("click", () => {
-	Bu = !Bu, yu.setAttribute("aria-pressed", String(Bu)), yu.textContent = Bu ? "Activar aura" : "Pausar aura", od();
+	Vu = !Vu, yu.setAttribute("aria-pressed", String(Vu)), yu.textContent = Vu ? "Activar aura" : "Pausar aura", sd();
 }), bu.addEventListener("click", () => {
-	Vu = !Vu, cd();
+	Hu = !Hu, ld();
 }), _u.addEventListener("webglcontextlost", (e) => {
-	e.preventDefault(), Uu = !0, Vu = !0, sd(), gu.classList.remove("is-ready", "is-loading"), gu.classList.add("is-lite"), vu.textContent = "Vista ligera · conexión 3D interrumpida", bu.textContent = "Vista ligera", bu.setAttribute("aria-pressed", "true"), bu.disabled = !0, yu.disabled = !0;
+	e.preventDefault(), Wu = !0, Hu = !0, cd(), gu.classList.remove("is-ready", "is-loading"), gu.classList.add("is-lite"), vu.textContent = "Vista ligera · conexión 3D interrumpida", bu.textContent = "3D no disponible", bu.disabled = !0, yu.hidden = !0;
 }), addEventListener("pagehide", () => {
-	zu = !1, sd();
+	Bu = !1, cd();
 }), addEventListener("pageshow", () => {
-	zu = !0, od();
+	Bu = !0, sd();
 }));
 //#endregion

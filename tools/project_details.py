@@ -10,6 +10,7 @@ PROJECT_DETAILS = {
         'evidence': 'Captura de la interfaz administrativa con datos de demostración. Los valores mostrados son ejemplos; no se publican registros personales ni métricas reales de estudiantes.',
         'links': [],
         'image': ('unli-demostracion.jpg', 'Panel administrativo UNLi con datos de demostración y cuenta de ejemplo.', 'Interfaz real con datos de demostración. No contiene registros personales reales.'),
+        'featured_caption': 'Panel UNLi con datos de demostración.',
     },
     'OdontologiaRA': {
         'purpose': 'Explorar modelos anatómicos craneales y odontológicos en realidad mixta para demostraciones y educación.',
@@ -18,6 +19,8 @@ PROJECT_DETAILS = {
         'scope': 'Visualización anatómica y odontológica en Meta Quest 3, combinando modelos digitales con el entorno real. Prototipo para exploración y demostración educativa.',
         'evidence': 'Proyecto Unity con modelos anatómicos, menú de selección, transparencia y controles de manipulación. La experiencia requiere un visor; no tiene una demostración web.',
         'links': [('Explorar Mapa 3D', '/proyectos/#mapa-3d')],
+        'image': ('odontologiara-unity.webp', 'Menú de selección y control de transparencia junto al modelo anatómico en Unity.', 'Vista de revisión en Unity del menú y el modelo anatómico.'),
+        'show_image_caption': True,
     },
     'Mapa 3D': {
         'purpose': 'Explorar y manipular un modelo tridimensional del terreno USS dentro del entorno real.',
@@ -26,6 +29,8 @@ PROJECT_DETAILS = {
         'scope': 'Modelo de terreno para exploración espacial en Meta Quest con OpenXR y XR Interaction Toolkit. La experiencia requiere un visor y permite seleccionar entre versiones para Quest y mayor detalle.',
         'evidence': 'Proyecto Unity con la escena, los modelos TerrenoUSS_Quest y TerrenoUSS_HQ, y scripts de selección y manipulación con las manos.',
         'links': [('Explorar OdontologiaRA', '/proyectos/#odontologiara')],
+        'image': ('mapa-3d-terreno.webp', 'Vista oblicua del terreno USS, con edificaciones, vegetación y una calle.', 'Render en Blender de la malla fotogramétrica usada en el proyecto de Unity.'),
+        'show_image_caption': True,
     },
     'Integraciones MCP': {
         'purpose': 'Conectar asistentes de IA con herramientas de modelado y desarrollo para ejecutar tareas en el entorno local.',

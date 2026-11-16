@@ -9,7 +9,8 @@ const status = document.querySelector('.journey-status');
 const auraButton = document.querySelector('.aura-toggle');
 const liteButton = document.querySelector('.lite-toggle');
 const progressBar = document.querySelector('.journey-progress span');
-const chapterNav = [...document.querySelectorAll('.journey-nav a')];
+const chapterNav = [...journey.querySelectorAll('.journey-nav a, .journey-chapters nav a')];
+const journeySections = journey.querySelector('.journey-sections');
 const chapterSections = [...document.querySelectorAll('.journey-content [data-chapter]')];
 const motion = matchMedia('(prefers-reduced-motion: reduce)');
 const mobile = matchMedia('(max-width: 700px)');
@@ -25,27 +26,31 @@ const iconBounds = [
 ].map(([x0,y0,x1,y1])=>new THREE.Vector4(x0/69,y0/587,x1/69,y1/587));
 const runeUniforms = {inlayReference:{value:null},runeProgress:{value:0},runeCenters:{value:new Float32Array(runeY)},runeIconBounds:{value:iconBounds}};
 let renderer, scene, camera, sword, flames, sparks, environment;
-let animationID = 0, loading, running = true, paused = false, lite = motion.matches;
+let animationID = 0, loading, running = true, paused = false, lite = false;
 let visible = true, failed = false, smoothProgress = 0, targetProgress = 0, lastTime = 0, effectTime = 0, currentChapter = -1;
 let viewportWidth = 0, viewportHeight = 0;
 const textureLoader = new THREE.TextureLoader();
 const lookTarget = new THREE.Vector3();
 
 function readProgress() {
-  // Follow the real chapter positions, including wrapped text on short screens.
-  const position = -chapterSections[0].getBoundingClientRect().top;
-  let chapter = 0;
-  while(chapter < chapterSections.length-1 && position >= chapterSections[chapter+1].offsetTop)chapter++;
-  const start = chapterSections[chapter].offsetTop;
-  const end = chapterSections[chapter+1]?.offsetTop ?? start+viewportHeight;
-  targetProgress = Math.min(10,chapter+THREE.MathUtils.clamp((position-start)/Math.max(1,end-start),0,1));
+  targetProgress = 0;
+  if (!journeySections.hidden) {
+    // Follow the real chapter positions, including wrapped text on short screens.
+    const position = -chapterSections[0].getBoundingClientRect().top;
+    let chapter = 0;
+    while(chapter < chapterSections.length-1 && position >= chapterSections[chapter+1].offsetTop)chapter++;
+    const start = chapterSections[chapter].offsetTop;
+    const end = chapterSections[chapter+1]?.offsetTop ?? start+viewportHeight;
+    targetProgress = Math.min(10,chapter+THREE.MathUtils.clamp((position-start)/Math.max(1,end-start),0,1));
+  }
   const progress = targetProgress/10;
   progressBar.style.width = `${progress*100}%`;
   const active = Math.min(9, Math.max(0, Math.round(targetProgress)));
   if (currentChapter !== active) {
     currentChapter = active;
-    chapterNav.forEach((a,i) => {
-      if (i === active) a.setAttribute('aria-current','true');
+    const activeHash = active === 0 ? '#recorrido' : `#tecnologia-${active}`;
+    chapterNav.forEach(a => {
+      if (a.hash === activeHash) a.setAttribute('aria-current','location');
       else a.removeAttribute('aria-current');
     });
   }
@@ -259,8 +264,9 @@ async function initialize() {
       stage.classList.remove('is-ready','is-loading');
       stage.classList.add('is-lite');
       status.textContent='Vista ligera · 3D no disponible';
-      liteButton.textContent='Vista ligera';liteButton.setAttribute('aria-pressed','true');
-      liteButton.disabled=true;auraButton.disabled=true;
+      liteButton.textContent='3D no disponible';
+      liteButton.disabled=true;
+      auraButton.hidden=true;
     }
   })();
   return loading;
@@ -319,13 +325,15 @@ function schedule(){
 }
 function stop(){cancelAnimationFrame(animationID);animationID=0;lastTime=0;}
 function updateMode(){
+  if (failed) return;
+  const ready = stage.classList.contains('is-ready');
   stage.classList.toggle('is-lite',lite);
-  stage.classList.toggle('is-loading',!lite && !stage.classList.contains('is-ready') && !failed);
-  liteButton.setAttribute('aria-pressed',String(lite));
-  liteButton.textContent=lite?'Activar 3D':'Vista ligera';
-  auraButton.disabled=lite || failed;
+  stage.classList.toggle('is-loading',!lite && !ready && !failed);
+  liteButton.disabled=!lite && !ready;
+  liteButton.textContent=lite?'Activar 3D':ready?'Vista ligera':'Cargando 3D…';
+  auraButton.hidden=lite || !ready || failed;
   if(lite){stop();status.textContent=motion.matches?'Vista ligera · movimiento reducido':'Vista ligera';}
-  else if(!failed){status.textContent=stage.classList.contains('is-ready')?'Recorrido 3D':'Cargando espada 3D…';initialize();schedule();}
+  else if(!failed){status.textContent=ready?'Recorrido 3D':'Cargando espada 3D…';initialize();schedule();}
 }
 function releaseScene(){
   stop();
@@ -361,8 +369,9 @@ if(journey){
   canvas.addEventListener('webglcontextlost',event=>{
     event.preventDefault();failed=true;lite=true;stop();stage.classList.remove('is-ready','is-loading');stage.classList.add('is-lite');
     status.textContent='Vista ligera · conexión 3D interrumpida';
-    liteButton.textContent='Vista ligera';liteButton.setAttribute('aria-pressed','true');
-    liteButton.disabled=true;auraButton.disabled=true;
+    liteButton.textContent='3D no disponible';
+    liteButton.disabled=true;
+    auraButton.hidden=true;
   });
   addEventListener('pagehide',()=>{running=false;stop();});
   addEventListener('pageshow',()=>{running=true;schedule();});

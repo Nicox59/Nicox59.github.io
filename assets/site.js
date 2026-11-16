@@ -13,6 +13,71 @@ if (toggle && nav) {
 }
 document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
 
+const journey = document.querySelector('.sword-journey');
+if (journey) {
+  const sections = journey.querySelector('.journey-sections');
+  const chapters = journey.querySelector('.journey-chapters');
+  const chapterToggle = chapters.querySelector('summary');
+  const sceneToggle = journey.querySelector('.lite-toggle');
+  const status = journey.querySelector('.journey-status');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const compactScreen = matchMedia('(max-width: 700px), (max-width: 950px) and (pointer: coarse)');
+  let sceneRequest;
+
+  const setExpanded = (expanded) => {
+    sections.hidden = !expanded;
+    journey.classList.toggle('is-collapsed', !expanded);
+  };
+  const isChapter = (hash) => /^#tecnologia-[1-9]$/.test(hash);
+  setExpanded(isChapter(location.hash));
+
+  const startScene = () => {
+    if (sceneRequest) return;
+    sceneToggle.disabled = true;
+    sceneToggle.textContent = 'Cargando 3D…';
+    status.textContent = 'Cargando la espada 3D.';
+    sceneRequest = import(new URL(journey.dataset.scene, document.baseURI).href).catch(() => {
+      sceneToggle.textContent = '3D no disponible';
+      status.textContent = 'Vista ligera · 3D no disponible';
+    });
+  };
+
+  sceneToggle.hidden = false;
+  sceneToggle.addEventListener('click', startScene);
+  if (!compactScreen.matches && !reducedMotion.matches) {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !compactScreen.matches && !reducedMotion.matches) {
+        observer.disconnect();
+        startScene();
+      }
+    }, { threshold: 0.2 });
+    observer.observe(journey.querySelector('.journey-intro'));
+  }
+
+  journey.addEventListener('click', (event) => {
+    const link = event.target.closest('a');
+    if (!link || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (isChapter(link.getAttribute('href'))) {
+      setExpanded(true);
+      if (link.classList.contains('journey-start') && !reducedMotion.matches) startScene();
+    }
+    if (link.classList.contains('journey-skip')) setExpanded(false);
+    if (chapters.contains(link)) chapters.open = false;
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && chapters.open) {
+      chapters.open = false;
+      if (chapters.contains(document.activeElement)) chapterToggle.focus();
+    }
+  });
+  window.addEventListener('hashchange', () => {
+    if (sections.hidden && isChapter(location.hash)) {
+      setExpanded(true);
+      document.getElementById(location.hash.slice(1)).scrollIntoView({ behavior: 'instant' });
+    }
+  });
+}
+
 document.querySelectorAll('[data-copy-email]').forEach((button) => {
   button.addEventListener('click', async () => {
     const email = button.dataset.copyEmail;

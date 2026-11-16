@@ -14,7 +14,7 @@ CHAPTERS = [
     ('Videojuegos', 'La tecnología se juega.', 'Experiencias interactivas para aprender, colaborar y explorar. Del código a una aventura compartida, con teclado o mando.', 'Python · Pygame · Unity', 'Juego para admisión USS', './proyectos/', 'M19 23h26c8 0 13 24 9 30-4 7-13-4-17-6H27c-4 2-13 13-17 6-4-6 1-30 9-30ZM22 30v14m-7-7h14M42 31v1m7 5v1m-7 5v1m-7-6v1M25 12h5v5h-5m10-9h5v5h-5m9-10h5v5h-5'),
 ]
 
-def sword_story():
+def sword_story(scene_url):
     root = Path(__file__).resolve().parents[1]
     runes = root / 'assets/sword/runes'
     runes.mkdir(parents=True, exist_ok=True)
@@ -26,6 +26,41 @@ def sword_story():
         svg = f'<svg xmlns="http://www.w3.org/2000/svg" width="256" height="272" viewBox="0 0 64 68" fill="none" stroke="#8eeeff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="{drawing}"/></svg>'
         (runes / f'rune-{i}.svg').write_text(svg, encoding='utf-8')
         nav.append(f'<a href="#tecnologia-{i}" aria-label="{escape(area)}" title="{escape(area)}"><span>{i:02}</span><span class="journey-nav-label" aria-hidden="true">{escape(area)}</span></a>')
-        articles.append(f'''<section class="journey-chapter" id="tecnologia-{i}" data-chapter="{i}" aria-labelledby="chapter-title-{i}"><div class="chapter-copy"><div class="chapter-symbol" aria-hidden="true">{svg}</div><p class="eyebrow">{i:02} / {area}</p><h2 id="chapter-title-{i}">{title}</h2><p class="chapter-description">{text}</p><p class="chapter-stack">{stack}</p><a class="text-link" href="{link}">{cta} <span aria-hidden="true">↗</span></a></div></section>''')
+        articles.append(f'''<section class="journey-chapter" id="tecnologia-{i}" data-chapter="{i}" aria-labelledby="chapter-title-{i}" tabindex="-1"><div class="chapter-copy"><div class="chapter-symbol" aria-hidden="true">{svg}</div><p class="eyebrow">{i:02} / {area}</p><h2 id="chapter-title-{i}">{title}</h2><p class="chapter-description">{text}</p><p class="chapter-stack">{stack}</p><a class="text-link" href="{link}">{cta} <span aria-hidden="true">↗</span></a></div></section>''')
     articles.append('''<section class="journey-chapter journey-outro" data-chapter="10" aria-labelledby="journey-end"><div class="chapter-copy"><p class="eyebrow">Del código al mundo real</p><h2 id="journey-end">Tu próxima idea<br>empieza aquí.</h2><p class="chapter-description">Explora los proyectos para conocer mi aporte, las tecnologías utilizadas y el alcance de cada desarrollo.</p><div class="actions"><a class="button" href="./contacto/">Conversemos ↗</a><a class="text-link" href="./proyectos/">Explorar proyectos →</a></div></div></section>''')
-    return f'''<div class="sword-journey" id="recorrido"><div class="sword-stage is-loading" aria-hidden="true"><div class="sword-loader"><span class="sword-loader-ring"></span><span>Cargando experiencia 3D…</span></div><div class="stage-grid"></div><div class="stage-orbit"></div><img class="sword-poster" src="./assets/sword/reference.png" alt="" fetchpriority="high"><canvas id="sword-canvas"></canvas><span class="stage-label">NIAR / ESPADA DE NUEVE RUNAS</span></div><div class="journey-content container"><section class="journey-intro" data-chapter="0" aria-labelledby="hero-title"><div class="intro-copy"><p class="eyebrow"><span class="dot"></span> Nicolás Araya · Ingeniero Civil Informático</p><h1 id="hero-title">Ideas que<br>cobran <span>vida.</span></h1><p class="intro-description">Desarrollo software, integro inteligencia artificial y creo experiencias que conectan el mundo digital con el físico.</p><div class="actions"><a class="button" href="#tecnologia-1">Explorar tecnologías <span aria-hidden="true">↓</span></a><a class="text-link" href="./proyectos/">Ver proyectos ↗</a></div><p class="rune-caption">Cada runa representa un área que aplico en mis proyectos.</p><p class="scroll-cue"><span aria-hidden="true">↓</span> Desplázate para recorrer la espada</p></div><div class="intro-edition"><span>01 — 09</span><span>Nueve símbolos.<br>Un universo de posibilidades.</span></div></section>{''.join(articles)}</div><nav class="journey-nav" aria-label="Tecnologías del recorrido"><a href="#recorrido" aria-label="Inicio del recorrido" title="Inicio"><span>◇</span><span class="journey-nav-label" aria-hidden="true">Inicio del recorrido</span></a>{''.join(nav)}</nav><div class="journey-toolbar"><span class="journey-status" role="status">Preparando la espada…</span><button class="aura-toggle" type="button" aria-pressed="false">Pausar aura</button><button class="lite-toggle" type="button" aria-pressed="false">Vista ligera</button><a class="journey-skip" href="#biografia">Saltar recorrido ↓</a></div><div class="journey-progress" aria-hidden="true"><span></span></div></div>'''
+    chapter_links = '<a href="#recorrido" aria-label="Inicio del recorrido"><span>◇</span><span class="journey-nav-label" aria-hidden="true">Inicio del recorrido</span></a>' + ''.join(nav)
+    return f'''<div class="sword-journey" id="recorrido" data-scene="{escape(scene_url, quote=True)}">
+<div class="sword-stage is-lite" aria-hidden="true">
+  <div class="sword-loader"><span class="sword-loader-ring"></span></div>
+  <div class="stage-grid"></div><div class="stage-orbit"></div>
+  <img class="sword-poster" src="./assets/sword/poster.webp" alt="" width="529" height="940" fetchpriority="high">
+  <canvas id="sword-canvas"></canvas>
+</div>
+<div class="journey-content container">
+  <section class="journey-intro" data-chapter="0" aria-labelledby="hero-title">
+    <div class="intro-copy">
+      <p class="eyebrow"><span class="dot"></span> Nicolás Araya · Ingeniero Civil Informático</p>
+      <h1 id="hero-title">Software que conecta <span>IA y dispositivos.</span></h1>
+      <p class="intro-description">Desarrollo aplicaciones, automatizo procesos y creo experiencias de realidad mixta e interacción por gestos.</p>
+      <div class="actions">
+        <a class="button" href="#proyectos">Ver proyectos <span aria-hidden="true">↓</span></a>
+        <a class="text-link journey-start" href="#tecnologia-1">Recorrer la espada <span aria-hidden="true">↓</span></a>
+      </div>
+      <p class="rune-caption">Cada runa representa un área que aplico en mis proyectos.</p>
+    </div>
+  </section>
+  <div class="journey-sections">{''.join(articles)}</div>
+</div>
+<nav class="journey-nav" aria-label="Tecnologías del recorrido">{chapter_links}</nav>
+<div class="journey-toolbar">
+  <span class="journey-status" role="status"></span>
+  <details class="journey-chapters">
+    <summary>Capítulos</summary>
+    <nav aria-label="Capítulos del recorrido">{chapter_links}</nav>
+  </details>
+  <button class="aura-toggle" type="button" aria-pressed="false" hidden>Pausar aura</button>
+  <button class="lite-toggle" type="button" hidden>Activar 3D</button>
+  <a class="journey-skip" href="#proyectos">Saltar recorrido <span aria-hidden="true">↓</span></a>
+</div>
+<div class="journey-progress" aria-hidden="true"><span></span></div>
+</div>'''
